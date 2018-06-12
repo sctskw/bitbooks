@@ -17,6 +17,6 @@ server.get('/', restify.plugins.serveStatic({
 API.mount('/api', server);
 
 //start the server
-server.listen(11001, '0.0.0.0', function() {
+server.listen(8080, '0.0.0.0', function() {
   console.log(`${server.name} listening at ${server.url}`);
 });
