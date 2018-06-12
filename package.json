@@ -1,0 +1,28 @@
+{
+  "name": "bitbooks",
+  "version": "1.0.0",
+  "description": "a world of bitbooks",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./server.js",
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sctskw/bitbooks.git"
+  },
+  "keywords": [
+    "bitbooks"
+  ],
+  "author": "Scott Skow",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sctskw/bitbooks/issues"
+  },
+  "homepage": "https://github.com/sctskw/bitbooks#readme",
+  "devDependencies": {},
+  "dependencies": {
+    "restify": "^7.2.1",
+    "restify-router": "^0.5.0"
+  }
+}
