@@ -1,6 +1,6 @@
-const Router = require('restify-router').Router;
+const API = require('./routes');
 
-module.exports.mount = function(path, server) {
+module.exports.mount = function(server, path) {
 
   //force to always be JSON
   server.pre(function(req, res, next) {
@@ -8,25 +8,8 @@ module.exports.mount = function(path, server) {
     return next();
   });
 
-  const API = new Router();
-  const TEST = new Router();
-  const STUFF = new Router();
-
-
-  TEST.get('/', function(req, res, next) {
-    res.send({test: true});
-    return next();
-  })
-
-  STUFF.get('/', function(req, res, next) {
-    res.send({stuff: true});
-    return next();
-  })
-
-  API.add('/test', TEST);
-  API.add('/stuff', STUFF);
-
-  API.applyRoutes(server, '/api');
+  //mount the API routes
+  API.applyRoutes(server, path || '/api');
 
   return server;
 

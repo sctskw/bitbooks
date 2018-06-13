@@ -14,9 +14,9 @@ server.get('/', restify.plugins.serveStatic({
 }));
 
 //mount the API
-API.mount('/api', server);
+API.mount(server, '/api');
 
 //start the server
-server.listen(process.env.PORT || 11001, function() {
+server.listen(process.env.PORT || 11001, '0.0.0.0', function() {
   console.log(`${server.name} listening at ${server.url}`);
 });
