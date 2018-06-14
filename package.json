@@ -20,7 +20,9 @@
     "url": "https://github.com/sctskw/bitbooks/issues"
   },
   "homepage": "https://github.com/sctskw/bitbooks#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "@vue/cli": "^3.0.0-beta.16"
+  },
   "dependencies": {
     "restify": "^7.2.1",
     "restify-router": "^0.5.0"

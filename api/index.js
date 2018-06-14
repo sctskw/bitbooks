@@ -1,5 +1,6 @@
 const API = require('./routes');
 
+
 module.exports.mount = function(server, path) {
 
   //force to always be JSON
