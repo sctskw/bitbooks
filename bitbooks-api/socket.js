@@ -1,3 +1,9 @@
+/**
+ * Simple WebSocket Server
+ *
+ * Docs: https://github.com/websockets/ws/blob/master/doc/ws.md
+ */
+
 const WebSocket = require('ws');
 
 const DEFAULT_SERVER = '0.0.0.0';
