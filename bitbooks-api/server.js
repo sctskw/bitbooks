@@ -7,9 +7,9 @@ const SOCKET = require('./socket.js');
 const APP = 'bitbooks';
 const APP_BASE = process.env.APP_BASE || __dirname;
 const API_SERVER = '0.0.0.0';
-const API_PORT = process.env.PORT || 11001;
+const API_PORT = process.env.API_PORT || 11001;
 const SOCKET_SERVER = API_SERVER;
-const SOCKET_PORT = process.env.PORT || 11002;
+const SOCKET_PORT = process.env.SOCKET_PORT || 11002;
 
 //initialize the server
 const server = restify.createServer({
