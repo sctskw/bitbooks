@@ -1,2 +1,3 @@
-npm install -g @vue/cli
-cd bitbooks-client && npm run build
+cd bitbooks-client
+npm install
+npm run build
