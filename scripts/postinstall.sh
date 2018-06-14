@@ -1,4 +1,5 @@
 #!/bin/sh
 export PATH=$PATH:./node_modules/.bin
-#npm install -g @vue/cli-service-global
-cd bitbooks-client && npm install && npm run build
+export APP_BASE=$PWD
+
+cd $APP_BASE/bitbooks-client && npm run build
