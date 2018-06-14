@@ -1,6 +1,6 @@
 const path = require('path');
 const restify = require('restify');
-const API = require('./api');
+const API = require('./main.js');
 
 const APP = 'bitbooks';
 
@@ -16,7 +16,8 @@ API.mount(server, '/api');
 
 //mount the web app base directory
 server.get('*', restify.plugins.serveStatic({
-  directory: path.resolve(__dirname, './bitbooks-client/dist'),
+  //TODO: how to deal with relative pathing? aliases? globals?
+  directory: path.resolve(process.env.APP_BASE, 'bitbooks-client/dist'),
   default: 'index.html'
 }));
 

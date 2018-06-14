@@ -1,0 +1,3 @@
+#!/bin/sh
+export APP_BASE=$PWD #so we don't have to use relatives moving forward
+node bitbooks-api/server.js
