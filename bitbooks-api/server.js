@@ -6,10 +6,8 @@ const SOCKET = require('./socket.js');
 //TOOD: move to CONFIG
 const APP = 'bitbooks';
 const APP_BASE = process.env.APP_BASE || __dirname;
-const API_SERVER = '0.0.0.0';
+const API_SERVER = '0.0.0.0'; //localhost
 const API_PORT = process.env.PORT || 11001;
-const SOCKET_SERVER = API_SERVER;
-const SOCKET_PORT = process.env.SOCKET_PORT || 11002;
 
 //initialize the server
 const server = restify.createServer({
@@ -39,8 +37,9 @@ server.listen(API_PORT, API_SERVER, function() {
 
 //start the socket server
 SOCKET.serve({
-  server: SOCKET_SERVER,
-  port: SOCKET_PORT,
+
+  //required: attach HTTP server
+  server: server,
 
   //TODO: connect these
   handlers: {
@@ -51,4 +50,7 @@ SOCKET.serve({
 
     }
   }
+
+}, function() {
+  console.log(`${server.name} socket is alive`);
 });

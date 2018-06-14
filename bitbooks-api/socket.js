@@ -6,35 +6,39 @@
 
 const WebSocket = require('ws');
 
-const DEFAULT_SERVER = '0.0.0.0';
-const DEFAULT_PORT = 11002;
+module.exports.serve = function initSocketServer(config, callback) {
 
-module.exports.serve = function initSocketServer(config) {
+  try {
 
-  //configs aren't required
-  if(!config) config = {};
+    //configs aren't required
+    if(!config) config = {};
 
-  //setup defaults
-  if(!config.server) config.server = process.env.SOCKET_SERVER || DEFAULT_SERVER;
-  if(!config.port) config.port = process.env.SOCKET_PORT || DEFAULT_PORT;
+    if(!config.server) throw "No HTTP Server Specified";
 
-  //create the server
-  const server = new WebSocket.Server({
-    server: config.server,
-    port: config.port
-  }, function() {
-    console.log(`bitbooks socket listening on ws://${config.server}:${config.port}`);
-  });
+    const server = new WebSocket.Server({
+      server: config.server
+    }, function() {
+      //NOOP: this isn't being called??
+    });
 
-  //connection established event
-  server.on('connection', function(socket, req) {
-    console.log(`incoming connection established: ${req.connection.remoteAddress}`);
-    socket.send('connection established. welcome!');
-  });
+    //connection established event
+    server.on('connection', function(socket, req) {
+      let address = req.connection.remoteAddress;
+      console.log(`incoming connection established: ${address}`);
+      socket.send('connection established. welcome!');
+    });
 
-  //incoming message event
-  server.on('message', function(message) {
-    console.log(`incoming message: ${message}`);
-  });
+    //incoming message event
+    server.on('message', function(message) {
+      console.log(`incoming message: ${message}`);
+    });
+
+    if(callback) return callback(null, server);
+
+  } catch (err) {
+
+    if(typeof callback === "function") return callback(err);
+
+  }
 
 }
