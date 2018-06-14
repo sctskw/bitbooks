@@ -2,19 +2,23 @@ const path = require('path');
 const restify = require('restify');
 const API = require('./api');
 
+const APP = 'bitbooks';
+
 //initialize the server
 const server = restify.createServer({
-  name: 'bitbooks'
+  name: APP,
+  strictRouting: false
 });
 
+//mount the API
+//NOTE: must do this first
+API.mount(server, '/api');
+
 //mount the web app base directory
-server.get('/', restify.plugins.serveStatic({
-  directory: path.resolve(__dirname, 'dist'),
+server.get('*', restify.plugins.serveStatic({
+  directory: path.resolve(__dirname, './bitbooks-client/dist'),
   default: 'index.html'
 }));
-
-//mount the API
-API.mount(server, '/api');
 
 //start the server
 server.listen(process.env.PORT || 11001, '0.0.0.0', function() {
