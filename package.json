@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "npm test",
-    "postinstall": "scripts/preinstall.sh"
+    "postinstall": "scripts/postinstall.sh"
   },
   "repository": {
     "type": "git",
