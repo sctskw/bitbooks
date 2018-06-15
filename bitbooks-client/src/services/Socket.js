@@ -9,21 +9,15 @@ class Socket {
     return this.conn.readyState === 1
   }
 
-  connect () {
+  connect (callback) {
     // TODO: how to dynamically change this for Prod?
     const host = window.location.hostname
 
     this.conn = new WebSocket(`ws://${host}:11001`)
 
-    this.conn.onmessage = (msg) => {
-      this.emitter.$emit('message', msg.data)
-    }
+    this.conn.onopen = callback
 
-    this.conn.onerror = (err) => {
-      this.emitter.$emit('error', err)
-    }
-
-    return this.emitter
+    return this
   }
 
   disconnect () {
@@ -33,6 +27,12 @@ class Socket {
 
   send (msg) {
     if (this.isConnected()) this.conn.send(msg)
+  }
+
+  on (action, handler) {
+    if (this.isConnected()) {
+      this.conn.addEventListener(action, handler)
+    }
   }
 }
 

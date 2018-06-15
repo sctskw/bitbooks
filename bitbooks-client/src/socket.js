@@ -19,8 +19,9 @@ const Facade = new Vue({
     },
 
     connect: function () {
-      this.socket.connect()
-      this.socket.on('message', this.emit)
+      this.socket.connect(() => {
+        this.socket.on('message', this.emit)
+      })
     },
 
     disconnect: function () {
@@ -31,24 +32,19 @@ const Facade = new Vue({
       this.socket.send(message)
     },
 
-    emit: function () {
-      debugger
+    emit: function (message) {
+      this.$emit('message', message)
+      this.$emit('data', message.data)
     }
   }
 
 })
 
-// attach/install the socket
+// attach/install the socket facade onto the App
 Vue.use(function ($Vue) {
   Object.defineProperty($Vue.prototype, '$socket', {
     get: function () { return Facade }
   })
-
-  // TODO: why does this prevent the rest of the cycle from continuing? There's no error
-  // even in a try/catch?
-  // Will move the connection to the store instead, but curious nonetheless
-  //
-  // Facade.connect()
 })
 
 export default Facade

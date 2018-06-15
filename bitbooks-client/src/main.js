@@ -13,8 +13,5 @@ new Vue({
   router,
   store,
   socket,
-  render: h => h(App),
-  beforeDestroy: function () {
-    debugger
-  }
+  render: h => h(App)
 }).$mount('#app')

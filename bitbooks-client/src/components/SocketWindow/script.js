@@ -2,6 +2,8 @@ export default {
 
   name: 'SocketWindow',
 
+  props: ['socket'],
+
   methods: {
 
     onMessage: function (message) {
@@ -11,7 +13,7 @@ export default {
   },
 
   created: function () {
-    this.$socket.$on('message', this.onMessage)
+    this.$socket.$on('data', this.onMessage)
   }
 
 }
