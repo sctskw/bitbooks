@@ -1,0 +1,16 @@
+{
+    "env": {
+        "node": true
+    },
+    "extends": [
+        "./.eslintrc.standard.json"
+    ],
+    "parserOptions": {
+        "parser": "babel-eslint"
+    },
+    "root": true,
+    "rules": {
+        "no-console": "off",
+        "no-debugger": "error"
+    }
+}

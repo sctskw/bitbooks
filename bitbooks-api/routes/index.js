@@ -1,8 +1,8 @@
-const Router = require('restify-router').Router;
-const Exchanges = require('./exchanges');
+const Router = require('restify-router').Router
+const Exchanges = require('./exchanges')
 
-const Routes = new Router();
+const Routes = new Router()
 
-Routes.add('/exchanges', Exchanges);
+Routes.add('/exchanges', Exchanges)
 
-module.exports = Routes;
+module.exports = Routes
