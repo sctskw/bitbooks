@@ -21,6 +21,15 @@ module.exports.serve = function initSocketServer(config, callback) {
       //NOOP: this isn't being called??
     });
 
+    // mutate the server to have a broadcast method
+    server.broadcast = function broadcast(data) {
+      server.clients.forEach(function each(client) {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(data);
+        }
+      });
+    };
+
     //connection established event
     server.on('connection', function(socket, req) {
       let address = req.connection.remoteAddress;

@@ -51,6 +51,14 @@ SOCKET.serve({
     }
   }
 
-}, function() {
+}, function(err, ws) {
+
   console.log(`${server.name} socket is alive`);
+
+  // TODO: remove
+  setInterval(function(socket) {
+    socket.broadcast('test');
+  }, 5000, ws);
+
+
 });
