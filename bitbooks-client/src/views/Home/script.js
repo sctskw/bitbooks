@@ -1,9 +1,9 @@
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld/index.vue'
+import SocketWindow from '@/components/SocketWindow/index.vue'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
+    SocketWindow
   }
 }
