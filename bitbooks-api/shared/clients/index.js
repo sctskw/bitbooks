@@ -1,5 +1,6 @@
 const EXCHANGES = {
-  bittrex: require('./bittrex.js')
+  bittrex: require('./bittrex.js'),
+  poloniex: require('./poloniex.js')
 }
 
 function subscribe (opts, onError, onMessage) {

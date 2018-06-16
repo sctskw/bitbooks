@@ -3,6 +3,7 @@ const restify = require('restify')
 const API = require('./main.js')
 const SOCKET = require('./socket.js')
 const Clients = require('./shared/clients')
+const log = require('./shared/logging.js')('server')
 
 // TODO: move to CONFIG
 const APP = 'bitbooks'
@@ -33,7 +34,7 @@ server.get('*', restify.plugins.serveStatic({
 
 // start the server
 server.listen(API_PORT, API_SERVER, function () {
-  console.log(`${server.name} listening at ${server.url}`)
+  log(`${server.name} listening at ${server.url}`)
 })
 
 // start the socket server
@@ -44,11 +45,11 @@ SOCKET.serve({
 
 }, function (err, ws) {
   if (err) {
-    console.error(err)
+    log(`error: ${err}`)
     process.exit(0)
   }
 
-  console.log(`${server.name} socket is alive`)
+  log(`${server.name} socket is alive`)
 
   // subscribe to all clients/exchanges
   Clients.subscribe({},
@@ -60,7 +61,12 @@ SOCKET.serve({
 
     // broadcast all client messages to the server
     function onMessage (message) {
-      ws.broadcast(JSON.stringify(message))
+
+      let msg = JSON.stringify(message)
+
+      log(`incoming update: ${msg}`)
+
+      ws.broadcast(msg)
     }
   )
 })
