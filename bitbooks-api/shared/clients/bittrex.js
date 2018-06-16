@@ -8,12 +8,22 @@ module.exports = {
   allowed: /updateExchangeState/ig,
 
   format: function (message) {
+
     if (!this.allowed.test(message.M)) return false
 
-    return {
-      exchange: this.name,
-      data: message.A
-    }
+    return message.A.map((data) => {
+      return {
+        exchange: this.name,
+        market: data.MarketName.replace('-', '_'), //normalize BTC-ETH to BTC_ETH
+        data: data
+      }
+    })
+
+  },
+
+  emit: function (message, callback) {
+    let msg = this.format(message)
+    if(msg && msg.length) msg.forEach(callback)
   },
 
   connect: function (opts, callback) {
@@ -26,11 +36,8 @@ module.exports = {
 
       log(`connected to ${this.name} exchange`)
 
-      bittrex.websockets.subscribe(['BTC-ETH'], (data) => {
-
-        let msg = this.format(data)
-
-        if (msg) return callback(msg)
+      bittrex.websockets.subscribe(['BTC-ETH', 'BTC-DCR'], (data) => {
+        this.emit(data, callback)
       })
 
     })

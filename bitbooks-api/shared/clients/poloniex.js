@@ -15,6 +15,11 @@ module.exports = {
     }
   },
 
+  emit: function(message, callback) {
+    let msg = this.format(message);
+    if(msg) return callback(msg)
+  },
+
   connect: function (opts, callback) {
 
     this.api = new Poloniex()
@@ -38,11 +43,6 @@ module.exports = {
       })
 
     })
-  },
-
-  emit: function(message, callback) {
-    let msg = this.format(message);
-    if(msg) return callback(msg)
   },
 
   disconnect: function () {
