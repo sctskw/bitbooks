@@ -18,14 +18,42 @@ const Facade = new Vue({
       return this.socket.isConnected() === true
     },
 
-    connect: function () {
-      this.socket.connect(() => {
+    connect: function (callback) {
+      const retry = this.reconnect.bind(this, callback)
+
+      this.$on('closed', retry)
+      this.$on('error', retry)
+
+      // monitor connection changes indefinitely
+      this.socket.connect((err, success) => {
+        if (err) return this.$emit('error')
+
+        this.$emit('connected')
+
+        this.socket.on('open', callback)
         this.socket.on('message', this.emit)
+        this.socket.on('close', this.onClose)
+        this.socket.on('error', this.onError)
+
+        if (callback) return callback(null, true)
       })
     },
 
+    reconnect: function (callback) {
+      // TODO add more logic to prevent retry hammering
+      this.disconnect()
+
+      // TODO: better retry logic
+      setTimeout(() => {
+        this.connect(callback)
+      }, 2000)
+    },
+
     disconnect: function () {
-      this.socket.disconnect()
+      if (this.isConnected()) {
+        this.socket.disconnect()
+        this.$emit('disconnect')
+      }
     },
 
     send: function (message) {
@@ -35,7 +63,16 @@ const Facade = new Vue({
     emit: function (message) {
       this.$emit('message', message)
       this.$emit('data', message.data)
+    },
+
+    onClose: function () {
+      this.$emit('closed')
+    },
+
+    onError: function () {
+      this.$emit('error')
     }
+
   }
 
 })

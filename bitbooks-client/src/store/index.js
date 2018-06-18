@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import Socket from '@/socket'
 import OrderBook from './modules/OrderBook.js'
 import Exchanges from './modules/Exchanges.js'
 
@@ -17,6 +18,12 @@ export default new Vuex.Store({
     connected: false
   },
 
+  getters: {
+    isConnected: function (state) {
+      return state.connected
+    }
+  },
+
   mutations: {
 
     connect: function (state) {
@@ -31,11 +38,22 @@ export default new Vuex.Store({
 
   actions: {
 
+    monitor: function (context) {
+      Socket.$on('closed', () => {
+        this.dispatch('disconnect')
+      })
+
+      this.dispatch('connect')
+    },
+
     connect: function (context) {
-      context.commit('connect')
+      Socket.connect(() => {
+        context.commit('connect')
+      })
     },
 
     disconnect: function (context) {
+      Socket.disconnect()
       context.commit('disconnect')
     }
 

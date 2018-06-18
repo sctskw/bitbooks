@@ -2,16 +2,15 @@ import Vue from 'vue'
 import App from './views/App/index.vue'
 import router from './router'
 import store from './store/'
-import socket from './socket'
 
 Vue.config.productionTip = false
 
-// initialize socket
-socket.connect()
+// initialize the store
+// TODO: can this be done somewhere else?
+store.dispatch('monitor')
 
 new Vue({
   router,
   store,
-  socket,
   render: h => h(App)
 }).$mount('#app')

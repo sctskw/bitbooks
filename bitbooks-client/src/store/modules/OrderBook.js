@@ -2,6 +2,7 @@
 
 export default {
 
+  // NOTE: this does not derive the name, just a nice hint in code
   name: 'OrderBook',
 
   namespaced: true,

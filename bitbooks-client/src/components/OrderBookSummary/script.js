@@ -4,14 +4,20 @@ export default {
 
   name: 'OrderBookSummary',
 
-  props: [],
-
-  computed: mapGetters('OrderBook', {
-    orders: 'getSummary',
-    updated: 'getLastUpdated'
-  }),
+  computed: {
+    ...mapGetters({
+      connected: 'isConnected'
+    }),
+    ...mapGetters('OrderBook', {
+      orders: 'getSummary',
+      updated: 'getLastUpdated'
+    })
+  },
 
   methods: {
+
+    ...mapGetters(['isConnected']),
+
     renderError: function (err) {
       console.error(err)
     }
