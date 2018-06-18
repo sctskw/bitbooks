@@ -1,3 +1,5 @@
+// @store OrderBook
+
 export default {
 
   name: 'OrderBook',
@@ -5,13 +7,42 @@ export default {
   namespaced: true,
 
   state: {
-    updated: null
+    updated: null,
+    orders: false // wait for them to load
   },
 
-  getters: {},
+  getters: {
+    getSummary: function (state) {
+      return state.orders
+    },
+    getLastUpdated: function (state) {
+      return new Date(state.updated).toString()
+    }
+  },
 
-  actions: {},
+  actions: {
 
-  mutations: {}
+    // TODO: make this work with Sockets/API
+    getOrders: function (context) {
+      setTimeout(() => {
+        context.commit('setOrders', {
+          totals: {
+            asks: Math.floor(Math.random() * 100),
+            bids: Math.floor(Math.random() * 100)
+
+          }
+        })
+      }, 2000)
+    }
+  },
+
+  mutations: {
+
+    setOrders: function (state, orders) {
+      state.orders = orders
+      state.updated = Date.now()
+    }
+
+  }
 
 }
