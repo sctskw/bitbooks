@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Socket from '@/services/Socket.js'
+import Socket from '@/lib/Socket.js'
 
 // initialize the socket
 let socket = new Socket()

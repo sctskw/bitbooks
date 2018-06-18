@@ -1,9 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import OrderBook from './modules/OrderBook.js'
+import Exchanges from './modules/Exchanges.js'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+
+  modules: {
+    OrderBook,
+    Exchanges
+  },
 
   state: {
     connected: false
@@ -12,7 +20,6 @@ export default new Vuex.Store({
   mutations: {
 
     connect: function (state) {
-      debugger
       state.connected = true
     },
 

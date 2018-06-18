@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './views/App/index.vue'
 import router from './router'
-import store from './store'
+import store from './store/'
 import socket from './socket'
 
 Vue.config.productionTip = false
