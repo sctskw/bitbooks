@@ -5,29 +5,25 @@ module.exports = {
 
   name: 'poloniex',
 
-  allowed: false,
-
   format: function (message) {
     return {
       exchange: this.name,
-      type: message.channel,
+      market: message.channel,
       data: message.data
     }
   },
 
-  emit: function(message, callback) {
-    let msg = this.format(message);
-    if(msg) return callback(msg)
+  emit: function (message, callback) {
+    let msg = this.format(message)
+    if (msg) return callback(msg)
   },
 
   connect: function (opts, callback) {
-
     this.api = new Poloniex()
 
     this.api.on('open', callback)
 
     this.api.openWebSocket({version: 2})
-
   },
 
   subscribe: function (opts, callback) {
@@ -41,7 +37,6 @@ module.exports = {
         let message = {channel, data, seq}
         this.emit(message, callback)
       })
-
     })
   },
 
