@@ -1,29 +1,32 @@
 const bittrex = require('node.bittrex.api')
-const log = require('../logging.js')('bittrex');
+const log = require('../logging.js')('bittrex')
 
 module.exports = {
 
   name: 'bittrex',
 
+  enabled: true,
+
   allowed: /updateExchangeState/ig,
 
-  format: function (message) {
+  // expose the API
+  api: bittrex,
 
+  format: function (message) {
     if (!this.allowed.test(message.M)) return false
 
     return message.A.map((data) => {
       return {
         exchange: this.name,
-        market: data.MarketName.replace('-', '_'), //normalize BTC-ETH to BTC_ETH
+        market: data.MarketName.replace('-', '_'), // normalize BTC-ETH to BTC_ETH
         data: data
       }
     })
-
   },
 
   emit: function (message, callback) {
     let msg = this.format(message)
-    if(msg && msg.length) msg.forEach(callback)
+    if (msg && msg.length) msg.forEach(callback)
   },
 
   connect: function (opts, callback) {
@@ -31,15 +34,12 @@ module.exports = {
   },
 
   subscribe: function (opts, callback) {
-
-    this.connect(opts, ()=> {
-
+    this.connect(opts, () => {
       log(`connected to ${this.name} exchange`)
 
       bittrex.websockets.subscribe(['BTC-ETH', 'BTC-DCR'], (data) => {
         this.emit(data, callback)
       })
-
     })
   },
 

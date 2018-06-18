@@ -19,5 +19,9 @@ function subscribe (opts, onError, onMessage) {
 }
 
 module.exports = {
-  subscribe
+  subscribe,
+
+  // expose all available Exchanges
+  EXCHANGES,
+  EX: EXCHANGES // alias
 }
