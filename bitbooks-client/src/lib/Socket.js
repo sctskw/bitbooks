@@ -1,3 +1,4 @@
+
 class Socket {
   constructor (config) {
     this.conn = null // dummy
@@ -28,15 +29,13 @@ class Socket {
   }
 
   connect (callback) {
-    // TODO: how to dynamically change this for Prod?
-    const host = window.location.hostname
-
     // don't reconnect more than once
     if (this.isReady()) return this
     if (this.isClosed() || this.isClosing()) this.disconnect() // cleanup
 
     this.conn = null // GC?
-    this.conn = new WebSocket(`ws://${host}:11001`)
+
+    this.conn = new WebSocket(getHost())
 
     function onConnect ($event) {
       if ($event.type === 'open') return callback(null, true)
@@ -66,6 +65,14 @@ class Socket {
   on (action, handler) {
     if (this.isReady()) this.conn.addEventListener(action, handler)
   }
+}
+
+function getHost () {
+  const host = window.location.hostname
+
+  if (process.env.NODE_ENV === 'production') return `wss://${host}`
+
+  return `ws://${host}:11001`
 }
 
 export default Socket
