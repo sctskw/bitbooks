@@ -2,7 +2,7 @@ const path = require('path')
 const restify = require('restify')
 const API = require('./main.js')
 const SOCKET = require('./socket.js')
-const Redis = require('redis')
+const STORAGE = require('./lib/cache')
 const log = require('./lib/logging.js')('server')
 
 // TODO: move to CONFIG
@@ -10,9 +10,6 @@ const APP = 'bitbooks'
 const APP_BASE = process.env.APP_BASE || __dirname
 const API_SERVER = '0.0.0.0' // localhost
 const API_PORT = process.env.PORT || 11001
-
-// create Redis Client
-const Storage = Redis.createClient()
 
 // initialize the server
 const server = restify.createServer({
@@ -54,20 +51,8 @@ SOCKET.serve({
 
   log(`${server.name} socket is alive`)
 
-  Storage.on('message', function (channel, message) {
-    let [exchange, market] = channel.split('::')
-
-    let msg = {
-      key: channel,
-      exchange: exchange,
-      market: market,
-      data: JSON.parse(message)
-    }
-
-    ws.broadcast(JSON.stringify(msg))
+  // broadcast subscription messages
+  STORAGE.subscribe({}, function (message) {
+    ws.broadcast(JSON.stringify(message))
   })
-
-  // TODO: subscribe to all things
-  Storage.subscribe('poloniex::BTC_ETH')
-  Storage.subscribe('bittrex::BTC_ETH')
 })

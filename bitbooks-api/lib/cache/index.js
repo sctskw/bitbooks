@@ -1,7 +1,22 @@
-const Storage = require('./storage.js')
-const Modifiers = require('./modifiers.js')
-const Cache = new Storage()
+const Redis = require('redis')
 
-Modifiers.apply(Cache)
+module.exports.subscribe = function (opts, callback) {
+  const Storage = Redis.createClient(opts || {})
 
-module.exports = Cache
+  Storage.on('message', function (channel, message) {
+    let [exchange, market] = channel.split('::')
+
+    let msg = {
+      key: channel,
+      exchange: exchange,
+      market: market,
+      data: JSON.parse(message)
+    }
+
+    return callback(msg)
+  })
+
+  // TODO: subscribe to all things
+  Storage.subscribe('poloniex::BTC_ETH')
+  Storage.subscribe('bittrex::BTC_ETH')
+}

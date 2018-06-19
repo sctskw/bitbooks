@@ -1,33 +1,60 @@
+const Promisify = require('util').promisify
 const EventEmitter = require('events').EventEmitter
-const Cache = require('node-cache')
+const Redis = require('redis')
+
+// Redis.debug_mode = true
 
 class Storage extends EventEmitter {
   constructor () {
     super()
-    this._cache = new Cache()
+
+    this._cache = Redis.createClient()
+
+    // attach as promise
+    this._get = Promisify(this._cache.get).bind(this._cache)
+    this._set = Promisify(this._cache.set).bind(this._cache)
   }
 
-  init (envelope) {
+  async set (key, data) {
+    await this._cache.set(key, JSON.stringify(data))
+  }
+
+  async get (key) {
+    let value = await this._get(key)
+    return JSON.parse(value || {})
+  }
+
+  async init (envelope) {
     let env = _unwrap(envelope)
 
-    this._cache.set(env.k, env.d)
+    // update the values
+    this.set(env.k, env.d)
 
-    this.emit('change', env.e, env.m, this._cache.get(env.k))
+    let value = await this.get(env.k)
+
+    this.publish(env, value)
   }
 
-  patch (envelope) {
+  async patch (envelope) {
     let env = _unwrap(envelope)
     let data = env.d
     let type = data.type
-    let curr = this._cache.get(env.k)
+    let curr = await this.get(env.k) || {}
 
     if (/bid/ig.test(type)) _patch('bids', curr, data)
     if (/ask/ig.test(type)) _patch('asks', curr, data)
 
     // update the cache
-    this._cache.set(env.k, curr)
+    this.set(env.k, curr)
 
-    this.emit('change', env.e, env.m, this._cache.get(env.k))
+    let value = await this.get(env.k)
+
+    this.publish(env, value)
+  }
+
+  publish (env, data) {
+    this._cache.publish(env.k, JSON.stringify(data))
+    this.emit('change', env.e, env.m, data)
   }
 }
 

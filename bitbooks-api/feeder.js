@@ -1,19 +1,21 @@
 #!/usr/bin/env node
 
 const Parser = require('minimist')
-const Storage = require('./lib/cache/redis')
+const Cache = require('./lib/cache/storage')
 const Clients = require('./lib/clients')
 
 const ARGS = Parser(process.argv, {'--': true})
 
-const store = new Storage()
+const Storage = new Cache()
 
 Clients.subscribe({
   exchange: ARGS.exchange,
   market: ARGS.market
 }, function (message) {
-  if (message.type === 'init') return store.init(message)
-  if (message.type === 'patch') return store.patch(message)
-
-  console.error(`invalid message: ${JSON.stringify(message)}`)
+  try {
+    Storage[message.type](message)
+  } catch (err) {
+    console.error(`fail: ${err}`)
+    process.exit(1)
+  }
 })
