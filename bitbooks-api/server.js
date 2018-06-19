@@ -2,8 +2,8 @@ const path = require('path')
 const restify = require('restify')
 const API = require('./main.js')
 const SOCKET = require('./socket.js')
-const Clients = require('./shared/clients')
-const log = require('./shared/logging.js')('server')
+const Clients = require('./lib/clients')
+const log = require('./lib/logging.js')('server')
 
 // TODO: move to CONFIG
 const APP = 'bitbooks'
