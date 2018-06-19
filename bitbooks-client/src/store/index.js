@@ -36,7 +36,7 @@ export default new Vuex.Store({
     },
 
     update: function (state, data) {
-      debugger
+      // TODO
     }
 
   },
