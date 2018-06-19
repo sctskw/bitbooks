@@ -3,7 +3,15 @@ const EXCHANGES = {
   poloniex: require('./poloniex.js')
 }
 
-function subscribe (opts, onError, onMessage) {
+function subscribe (opts, callback) {
+  let ex = EXCHANGES[opts.exchange]
+
+  if (!ex) throw new Error(`invalid exchange ${opts.exchange}`)
+
+  ex.subscribe(opts, callback)
+}
+
+function subscribeAll (opts, onError, onMessage) {
   try {
     for (let ex in EXCHANGES) {
       try {

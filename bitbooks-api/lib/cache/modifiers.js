@@ -3,7 +3,7 @@ const Clients = require('../clients')
 
 function apply (storage) {
   // subscribe to all clients/exchanges
-  Clients.subscribe({},
+  Clients.subscribeAll({},
 
     // handle any subscription errors gracefully
     function onError (err) {
