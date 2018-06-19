@@ -6,10 +6,10 @@
 
   <div v-if="!!summary" class="order-summary">
     <label for="os-totals-bids">Open Bids:</label>
-    <span id="os-totals-bids">{{ summary.totals.bids }}</span>
+    <span id="os-totals-bids">{{ summary.totals.bids.count }} / {{summary.totals.bids.volume}}</span>
     </br>
     <label for="os-totals-asks">Open Asks/Sells:</label>
-    <span id="os-totals-asks">{{ summary.totals.asks }}</span>
+    <span id="os-totals-asks">{{ summary.totals.asks.count }} / {{summary.totals.asks.volume}}</span>
     </br>
     <label for="os-updated">updated:</label>
     <span id="os-updated">{{ updated }}</span>

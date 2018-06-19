@@ -27,22 +27,38 @@ export default {
       // NOTE: returning as a function allows custom params
       return function (exchange) {
         let struct = {
-          bids: 0,
-          asks: 0
+          bids: {
+            count: 0,
+            volume: 0
+          },
+          asks: {
+            count: 0,
+            volume: 0
+          }
         }
 
         let bids = Object.keys(exchange.bids)
         let asks = Object.keys(exchange.asks)
 
-        struct.bids = Math.ceil(bids.reduce(function (sum, key) {
+        let bidVolume = Math.ceil(bids.reduce(function (sum, key) {
           sum += parseFloat(exchange.bids[key])
           return sum
-        }, struct.bids))
+        }, struct.bids.volume))
 
-        struct.asks = Math.ceil(asks.reduce(function (sum, val) {
+        let askVolume = Math.ceil(asks.reduce(function (sum, val) {
           sum += parseFloat(exchange.asks[val])
           return sum
-        }, struct.asks))
+        }, struct.asks.volume))
+
+        struct.bids = {
+          count: bids.length,
+          volume: bidVolume
+        }
+
+        struct.asks = {
+          count: asks.length,
+          volume: askVolume
+        }
 
         return struct
       }
@@ -62,8 +78,8 @@ export default {
 
       let results = {
         totals: {
-          bids: 0,
-          asks: 0
+          bids: { count: 0, volume: 0 },
+          asks: { count: 0, volume: 0 }
         }
       }
 
@@ -75,8 +91,10 @@ export default {
         results[ex] = totals
 
         // keep track of true totals
-        results.totals.bids += totals.bids
-        results.totals.asks += totals.asks
+        results.totals.bids.count += totals.bids.count
+        results.totals.bids.volume += totals.bids.volume
+        results.totals.asks.count += totals.asks.count
+        results.totals.asks.volume += totals.asks.volume
       }
 
       context.commit('setSummary', results)
