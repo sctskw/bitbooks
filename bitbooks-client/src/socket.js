@@ -62,7 +62,12 @@ const Facade = new Vue({
 
     emit: function (message) {
       this.$emit('message', message)
-      this.$emit('data', message.data)
+
+      try {
+        this.$emit('data', JSON.parse(message.data))
+      } catch (err) {
+        // this is not a valid update message. ignore
+      }
     },
 
     onClose: function () {

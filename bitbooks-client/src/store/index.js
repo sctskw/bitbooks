@@ -15,7 +15,8 @@ export default new Vuex.Store({
   },
 
   state: {
-    connected: false
+    connected: false,
+    messages: {}
   },
 
   getters: {
@@ -32,6 +33,10 @@ export default new Vuex.Store({
 
     disconnect: function (state) {
       state.connected = false
+    },
+
+    update: function (state, data) {
+      debugger
     }
 
   },
@@ -41,6 +46,10 @@ export default new Vuex.Store({
     monitor: function (context) {
       Socket.$on('closed', () => {
         this.dispatch('disconnect')
+      })
+
+      Socket.$on('data', (data) => {
+        this.dispatch('update', data)
       })
 
       this.dispatch('connect')
@@ -55,6 +64,10 @@ export default new Vuex.Store({
     disconnect: function (context) {
       Socket.disconnect()
       context.commit('disconnect')
+    },
+
+    update: function (context, data) {
+      context.commit('update', data)
     }
 
   }
