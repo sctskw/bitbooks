@@ -15,27 +15,31 @@ module.exports = {
     return /orderBookModify|orderBookRemove/ig.test(message.type)
   },
 
-  process: function (message) {
-    return message.data.reduce((memo, message) => {
-      if (this.isInit(message)) {
-        memo.push(this.format(message, 'init'))
-      }
+  getType: function (message) {
+    if (this.isInit(message)) return 'init'
+    if (this.isModify(message)) return 'patch'
+    return null
+  },
 
-      if (this.isModify(message)) {
-        memo.push(this.format(message, 'patch'))
-      }
+  process: function (message) {
+    // default message envelope
+    const msg = {
+      exchange: this.name,
+      market: message.channel
+    }
+
+    return message.data.reduce((memo, data) => {
+      // identify the message type
+      let type = this.getType(data)
+
+      // no defined type, ignore message
+      if (!type) return memo
+
+      // append the message with proper formatting
+      memo.push(Object.assign({}, msg, { data: data.data, type }))
 
       return memo
     }, [])
-  },
-
-  format: function (message, type) {
-    return {
-      exchange: this.name,
-      market: message.channel,
-      type: type,
-      data: message.data
-    }
   },
 
   emit: function (message, callback) {

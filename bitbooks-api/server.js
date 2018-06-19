@@ -2,7 +2,7 @@ const path = require('path')
 const restify = require('restify')
 const API = require('./main.js')
 const SOCKET = require('./socket.js')
-const Clients = require('./lib/clients')
+const Storage = require('./lib/cache')
 const log = require('./lib/logging.js')('server')
 
 // TODO: move to CONFIG
@@ -51,22 +51,15 @@ SOCKET.serve({
 
   log(`${server.name} socket is alive`)
 
-  // subscribe to all clients/exchanges
-  Clients.subscribe({},
-
-    // handle any subscription errors gracefully
-    function onError (err) {
-      console.error(err)
-    },
-
-    // broadcast all client messages to the server
-    function onMessage (message) {
-
-      let msg = JSON.stringify(message)
-
-      log(`incoming update: ${msg}`)
-
-      ws.broadcast(msg)
+  Storage.on('change', function (exchange, market, data) {
+    let msg = {
+      exchange,
+      market,
+      data
     }
-  )
+
+    log('[CHANGE]', msg)
+
+    ws.broadcast(JSON.stringify(msg))
+  })
 })

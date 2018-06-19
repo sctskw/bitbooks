@@ -10,6 +10,7 @@
   "author": "Scott Skow",
   "license": "ISC",
   "dependencies": {
+    "node-cache": "^4.2.0",
     "node.bittrex.api": "^1.0.0",
     "poloniex-api-node": "^1.9.0",
     "restify": "^7.2.1",
