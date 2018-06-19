@@ -5,17 +5,45 @@ module.exports = {
 
   name: 'poloniex',
 
-  format: function (message) {
+  allowed: /orderBook|orderBookModify/ig,
+
+  isInit: function (message) {
+    return /orderBook$/i.test(message.type)
+  },
+
+  isModify: function (message) {
+    return /orderBookModify|orderBookRemove/ig.test(message.type)
+  },
+
+  process: function (message) {
+    return message.data.reduce((memo, message) => {
+      if (this.isInit(message)) {
+        memo.push(this.format(message, 'init'))
+      }
+
+      if (this.isModify(message)) {
+        memo.push(this.format(message, 'patch'))
+      }
+
+      return memo
+    }, [])
+  },
+
+  format: function (message, type) {
     return {
       exchange: this.name,
       market: message.channel,
+      type: type,
       data: message.data
     }
   },
 
   emit: function (message, callback) {
-    let msg = this.format(message)
-    if (msg) return callback(msg)
+    let msgs = this.process(message)
+
+    if (!msgs || !msgs.length) return false
+
+    msgs.forEach(callback)
   },
 
   connect: function (opts, callback) {
