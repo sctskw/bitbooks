@@ -1,7 +1,7 @@
 const Redis = require('redis')
 
 module.exports.subscribe = function (opts, callback) {
-  const Storage = Redis.createClient(opts || {})
+  const Storage = Redis.createClient(process.env.REDIS_URL)
 
   Storage.on('message', function (channel, message) {
     let [exchange, market] = channel.split('::')

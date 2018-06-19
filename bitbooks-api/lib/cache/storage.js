@@ -8,7 +8,7 @@ class Storage extends EventEmitter {
   constructor () {
     super()
 
-    this._cache = Redis.createClient()
+    this._cache = Redis.createClient(process.env.REDIS_URL)
 
     // attach as promise
     this._get = Promisify(this._cache.get).bind(this._cache)

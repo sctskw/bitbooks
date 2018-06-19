@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "npm test",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "feeders": "./bin/start_feeds.sh"
   },
   "author": "Scott Skow",
   "license": "ISC",
