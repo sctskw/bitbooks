@@ -2,6 +2,3 @@
 export APP_BASE=$PWD #so we don't have to use relatives moving forward
 
 node bitbooks-api/server.js
-
-# start the feeds
-cd $APP_BASE/bitbooks-api && npm run feeders

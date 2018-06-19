@@ -3,6 +3,7 @@ const restify = require('restify')
 const API = require('./main.js')
 const SOCKET = require('./socket.js')
 const STORAGE = require('./lib/cache')
+const FEEDS = require('./bin/feeds.js')
 const log = require('./lib/logging.js')('server')
 
 // TODO: move to CONFIG
@@ -56,3 +57,10 @@ SOCKET.serve({
     ws.broadcast(JSON.stringify(message))
   })
 })
+
+if (process.env.NODE_ENV === 'production') {
+  console.log('[feeder] starting feeds')
+
+  //start the feeds
+  FEEDS.start()
+}
