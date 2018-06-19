@@ -16,12 +16,15 @@ export default new Vuex.Store({
 
   state: {
     connected: false,
-    messages: {}
+    data: null
   },
 
   getters: {
     isConnected: function (state) {
       return state.connected
+    },
+    getData: function (state) {
+      return state.data
     }
   },
 
@@ -36,9 +39,9 @@ export default new Vuex.Store({
     },
 
     update: function (state, data) {
-      // TODO
+      if (!state.data) state.data = {}
+      state.data[data.key] = Object.assign({}, {...data, updated: Date.now()})
     }
-
   },
 
   actions: {
@@ -68,6 +71,7 @@ export default new Vuex.Store({
 
     update: function (context, data) {
       context.commit('update', data)
+      this.dispatch('OrderBook/setSummary')
     }
 
   }

@@ -1,15 +1,15 @@
 <div class="order-summary-wrapper">
 
-  <div v-if="!summary">
+  <div v-if="!orders">
     <h3>Looking up Orders...</h3>
   </div>
 
-  <div v-if="!!summary" class="order-summary">
+  <div v-if="!!orders" class="order-summary">
     <label for="os-totals-bids">Open Bids:</label>
-    <span id="os-totals-bids">{{ summary.totals.bids }}</span>
+    <span id="os-totals-bids">{{ orders.totals.bids }}</span>
     </br>
     <label for="os-totals-asks">Open Asks/Sells:</label>
-    <span id="os-totals-asks">{{ summary.totals.asks }}</span>
+    <span id="os-totals-asks">{{ orders.totals.asks }}</span>
     </br>
     <label for="os-updated">updated:</label>
     <span id="os-updated">{{ updated }}</span>

@@ -9,22 +9,20 @@ export default {
       connected: 'isConnected'
     }),
     ...mapGetters('OrderBook', {
-      orders: 'getSummary',
-      updated: 'getLastUpdated'
+      summary: 'getSummary',
+      updated: 'getLastUpdated',
+      orders: 'getOrders'
     })
   },
 
   methods: {
-
-    ...mapGetters(['isConnected']),
-
-    renderError: function (err) {
-      console.error(err)
-    }
+    ...mapGetters(['isConnected'])
   },
 
   created: function () {
-    this.$store.dispatch('OrderBook/getOrders')
+    this.$store.watch(this.isConnected, (connected) => {
+      this.$store.dispatch('OrderBook/setSummary')
+    })
   }
 
 }
