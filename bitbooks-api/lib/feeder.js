@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 const Parser = require('minimist')
-const Cache = require('./lib/cache/storage')
-const Clients = require('./lib/clients')
+const Cache = require('./cache/storage')
+const Clients = require('./clients')
 
 const ARGS = Parser(process.argv, {'--': true})
 
