@@ -1,5 +1,5 @@
-const main = require('socket.js')
+const socket = require('socket.js')
 
-test('has server() function', () => {
-  expect(main.serve).toBeDefined()
+test('has serve() function', () => {
+  expect(socket.serve).toBeDefined()
 })

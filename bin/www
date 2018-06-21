@@ -1,4 +1,4 @@
 #!/bin/sh
 export APP_BASE=$PWD #so we don't have to use relatives moving forward
 
-node bitbooks-api/server.js
+cd $APP_BASE/bitbooks-api && npm start
