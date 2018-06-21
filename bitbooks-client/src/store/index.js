@@ -83,7 +83,7 @@ export default new Vuex.Store({
       // check last time we updated so we don't spam
       if (!refresh) return false
 
-      //console.log(`last updated: ${new Date(this.state.updated)}`)
+      // console.log(`last updated: ${new Date(this.state.updated)}`)
 
       // commit the new data changes
       context.commit('update', data)
