@@ -1,8 +1,15 @@
 {
-  "name": "bitbooks-api",
-  "jest": {
-    "verbose": true,
-    "rootDir": "./test",
-    "testRegex": "*.test.js"
-  }
+    "moduleDirectories": [
+      "node_modules",
+      "./"
+    ],
+    "modulePaths": [
+      "<rootDir>"
+    ],
+    "rootDir": "./",
+    "testEnvironment": "node",
+    "testMatch": [
+        "**/*.test.js"
+    ],
+    "verbose": true
 }

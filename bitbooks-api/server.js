@@ -1,6 +1,6 @@
 const path = require('path')
 const restify = require('restify')
-const API = require('./main.js')
+const API = require('main.js')
 const SOCKET = require('./socket.js')
 const STORAGE = require('./lib/cache')
 const FEEDS = require('./bin/feeds.js')
@@ -33,10 +33,12 @@ server.get('*', restify.plugins.serveStatic({
   default: 'index.html'
 }))
 
-// start the server
-server.listen(API_PORT, API_SERVER, function () {
-  log(`${server.name} listening at ${server.url}`)
-})
+if (process.env.NODE_ENV !== 'test') {
+  // start the server
+  server.listen(API_PORT, API_SERVER, function () {
+    log(`${server.name} listening at ${server.url}`)
+  })
+}
 
 // start the socket server
 SOCKET.serve({
@@ -61,6 +63,6 @@ SOCKET.serve({
 if (process.env.NODE_ENV === 'production') {
   console.log('[feeder] starting feeds')
 
-  //start the feeds
+  // start the feeds
   FEEDS.start()
 }
