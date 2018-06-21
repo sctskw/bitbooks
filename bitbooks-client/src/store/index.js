@@ -16,12 +16,16 @@ export default new Vuex.Store({
 
   state: {
     connected: false,
+    updated: 0,
     data: null
   },
 
   getters: {
     isConnected: function (state) {
       return state.connected
+    },
+    getLastUpdated: function (state) {
+      return state.updated
     },
     getData: function (state) {
       return state.data
@@ -40,7 +44,11 @@ export default new Vuex.Store({
 
     update: function (state, data) {
       if (!state.data) state.data = {}
-      state.data[data.key] = Object.assign({}, {...data, updated: Date.now()})
+
+      const now = Date.now()
+
+      state.data[data.key] = Object.assign({}, {...data, updated: now})
+      state.updated = now
     }
   },
 
@@ -70,8 +78,19 @@ export default new Vuex.Store({
     },
 
     update: function (context, data) {
+      let refresh = (Date.now() - parseInt(this.state.updated)) > 3000
+
+      // check last time we updated so we don't spam
+      if (!refresh) return false
+
+      console.log(`last updated: ${new Date(this.state.updated)}`)
+
+      // commit the new data changes
       context.commit('update', data)
+
+      // TODO: should these be listened for on the OrderBook?
       this.dispatch('OrderBook/setSummary')
+      this.dispatch('OrderBook/setOrders')
     }
 
   }

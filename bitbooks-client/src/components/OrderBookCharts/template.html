@@ -1,21 +1,3 @@
-<div class="order-summary-wrapper">
-
-  <div v-if="!orders">
-    <h3>Looking up Orders...</h3>
-  </div>
-
-  <div v-if="!!orders" class="order-summary">
-    <label for="os-totals-bids">Open Bids:</label>
-    <span id="os-totals-bids">{{ orders.totals.bids }}</span>
-    </br>
-    <label for="os-totals-asks">Open Asks/Sells:</label>
-    <span id="os-totals-asks">{{ orders.totals.asks }}</span>
-    </br>
-    <label for="os-updated">updated:</label>
-    <span id="os-updated">{{ updated }}</span>
-    </br>
-    <label for="os-updated">connected:</label>
-    <span id="os-updated">{{ connected }}</span>
-  </div>
-
+<div class="order-book-charts">
+  <div id="ob-chart" class="ob-chart"></div>
 </div>

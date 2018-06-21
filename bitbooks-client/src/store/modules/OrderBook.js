@@ -8,17 +8,16 @@ export default {
   namespaced: true,
 
   state: {
-    updated: null,
     summary: false,
     orders: false // wait for them to load
   },
 
   getters: {
+    getLastUpdated: function (state) {
+      return new Date()
+    },
     getSummary: function (state) {
       return state.summary
-    },
-    getLastUpdated: function (state) {
-      return new Date(state.updated).toString()
     },
     getOrders: function (state, getters, rootState) {
       return state.orders
@@ -62,12 +61,49 @@ export default {
 
         return struct
       }
+    },
+
+    getOrderBook: function () {
+      return function (exchange) {
+        let data = exchange.data
+
+        function sort (items) {
+          // Sort list just in case
+          return items.sort(function (a, b) {
+            if (a.value > b.value) return 1
+            return (a.value < b.value) ? -1 : 0
+          })
+        }
+
+        function flatten (items) {
+          return sort(Object.keys(items)
+            .reduce(function (memo, volume) {
+              let vol = parseFloat(items[volume]).toFixed(8)
+              let val = parseFloat(volume).toFixed(8)
+
+              memo.push({
+                volume: vol,
+                value: val
+              })
+
+              return memo
+            }, []))
+        }
+
+        let bids = flatten(data.bids).reverse()
+        let asks = flatten(data.asks)
+
+        return { bids, asks }
+      }
     }
   },
 
   mutations: {
     setSummary: function (state, data) {
       state.summary = data
+    },
+    setOrders: function (state, data) {
+      state.orders = data
     }
   },
 
@@ -98,6 +134,17 @@ export default {
       }
 
       context.commit('setSummary', results)
+    },
+
+    setOrders: function (context) {
+      let db = this.state.data
+      let orders = {}
+
+      for (let ex in db) {
+        orders[ex] = context.getters.getOrderBook(db[ex])
+      }
+
+      context.commit('setOrders', orders)
     }
   }
 
