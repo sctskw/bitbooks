@@ -1,14 +1,28 @@
-const API = require('./routes')
+const path = require('path')
+const restify = require('restify')
 
-module.exports.mount = function (server, path) {
-  // force to always be JSON
-  server.pre(function (req, res, next) {
-    req.headers.accept = 'application/json'
-    return next()
-  })
+const CONFIG = require('../config.js')
+const API = require('./api.js')
 
-  // mount the API routes
-  API.applyRoutes(server, path || '/api')
+// initialize the server
+const server = restify.createServer({
+  name: CONFIG.APP,
+  strictRouting: false
+})
 
-  return server
-}
+// configure it
+server.use(restify.plugins.queryParser())
+server.use(restify.plugins.bodyParser())
+
+// mount the API
+// NOTE: must do this first
+API.mount(server, '/api')
+
+// mount the web app base directory
+server.get('*', restify.plugins.serveStatic({
+  // TODO: how to deal with relative pathing? aliases? globals?
+  directory: path.resolve(CONFIG.APP_BASE, 'bitbooks-client/dist'),
+  default: 'index.html'
+}))
+
+module.exports = server

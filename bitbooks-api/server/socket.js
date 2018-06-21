@@ -5,8 +5,9 @@
  */
 
 const WebSocket = require('ws')
+const promisify = require('util').promisify
 
-module.exports.serve = function initSocketServer (config, callback) {
+function initSocketServer (config, callback) {
   try {
     // configs aren't required
     if (!config) config = {}
@@ -43,4 +44,8 @@ module.exports.serve = function initSocketServer (config, callback) {
     console.error(err)
     if (typeof callback === 'function') return callback(err)
   }
+}
+
+module.exports.serve = function serveSocket (config) {
+  return promisify(initSocketServer).call(this, config)
 }
