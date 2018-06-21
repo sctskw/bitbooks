@@ -1,0 +1,502 @@
+[
+    {
+        "bidstotalvolume": 536.5979148499999,
+        "bidsvolume": 1.892,
+        "value": 0.0786778
+    },
+    {
+        "bidstotalvolume": 534.7059148499999,
+        "bidsvolume": 0.2541775,
+        "value": 0.07868517
+    },
+    {
+        "bidstotalvolume": 534.4517373499999,
+        "bidsvolume": 0.0026,
+        "value": 0.07869283
+    },
+    {
+        "bidstotalvolume": 534.4491373499999,
+        "bidsvolume": 0.12706651,
+        "value": 0.07869894
+    },
+    {
+        "bidstotalvolume": 534.3220708399999,
+        "bidsvolume": 0.00128336,
+        "value": 0.0787
+    },
+    {
+        "bidstotalvolume": 534.3207874799999,
+        "bidsvolume": 34.84,
+        "value": 0.07870001
+    },
+    {
+        "bidstotalvolume": 499.4807874799999,
+        "bidsvolume": 48.80352919,
+        "value": 0.07870002
+    },
+    {
+        "bidstotalvolume": 450.6772582899999,
+        "bidsvolume": 0.02996112,
+        "value": 0.07871516
+    },
+    {
+        "bidstotalvolume": 450.6472971699999,
+        "bidsvolume": 4.9015,
+        "value": 0.07873406
+    },
+    {
+        "bidstotalvolume": 445.7457971699999,
+        "bidsvolume": 0.17836327,
+        "value": 0.0787567
+    },
+    {
+        "bidstotalvolume": 445.5674338999999,
+        "bidsvolume": 0.0399998,
+        "value": 0.07875988
+    },
+    {
+        "bidstotalvolume": 445.52743409999994,
+        "bidsvolume": 0.0126953,
+        "value": 0.07876936
+    },
+    {
+        "bidstotalvolume": 445.5147387999999,
+        "bidsvolume": 0.64950387,
+        "value": 0.0787696
+    },
+    {
+        "bidstotalvolume": 444.86523492999993,
+        "bidsvolume": 1.0015,
+        "value": 0.0787724
+    },
+    {
+        "bidstotalvolume": 443.8637349299999,
+        "bidsvolume": 0.6,
+        "value": 0.07877315
+    },
+    {
+        "bidstotalvolume": 443.2637349299999,
+        "bidsvolume": 0.05201542,
+        "value": 0.07877725
+    },
+    {
+        "bidstotalvolume": 443.2117195099999,
+        "bidsvolume": 0.07260774,
+        "value": 0.07877948
+    },
+    {
+        "bidstotalvolume": 443.1391117699999,
+        "bidsvolume": 0.079167,
+        "value": 0.07878188
+    },
+    {
+        "bidstotalvolume": 443.0599447699999,
+        "bidsvolume": 5.91092,
+        "value": 0.0787829
+    },
+    {
+        "bidstotalvolume": 437.1490247699999,
+        "bidsvolume": 6,
+        "value": 0.07879318
+    },
+    {
+        "bidstotalvolume": 431.1490247699999,
+        "bidsvolume": 55.53383019,
+        "value": 0.07879319
+    },
+    {
+        "bidstotalvolume": 375.6151945799999,
+        "bidsvolume": 2.44416942,
+        "value": 0.0788
+    },
+    {
+        "bidstotalvolume": 373.17102515999994,
+        "bidsvolume": 4.99,
+        "value": 0.07880049
+    },
+    {
+        "bidstotalvolume": 368.18102515999993,
+        "bidsvolume": 6.9,
+        "value": 0.07883241
+    },
+    {
+        "bidstotalvolume": 361.28102515999996,
+        "bidsvolume": 0.00376249,
+        "value": 0.0788357
+    },
+    {
+        "bidstotalvolume": 361.27726266999997,
+        "bidsvolume": 0.0151322,
+        "value": 0.07884569
+    },
+    {
+        "bidstotalvolume": 361.26213047,
+        "bidsvolume": 0.01545718,
+        "value": 0.07884807
+    },
+    {
+        "bidstotalvolume": 361.24667329,
+        "bidsvolume": 0.03351917,
+        "value": 0.07885845
+    },
+    {
+        "bidstotalvolume": 361.21315412,
+        "bidsvolume": 0.0041847,
+        "value": 0.07885873
+    },
+    {
+        "bidstotalvolume": 361.20896942,
+        "bidsvolume": 0.00167388,
+        "value": 0.07885874
+    },
+    {
+        "bidstotalvolume": 361.20729554,
+        "bidsvolume": 0.00341252,
+        "value": 0.07885885
+    },
+    {
+        "bidstotalvolume": 361.20388302000003,
+        "bidsvolume": 0.00640344,
+        "value": 0.07886371
+    },
+    {
+        "bidstotalvolume": 361.19747958000005,
+        "bidsvolume": 5.1,
+        "value": 0.07887622
+    },
+    {
+        "bidstotalvolume": 356.09747958,
+        "bidsvolume": 0.29470252,
+        "value": 0.07889312
+    },
+    {
+        "bidstotalvolume": 355.80277706000004,
+        "bidsvolume": 0.09286586,
+        "value": 0.07889672
+    },
+    {
+        "bidstotalvolume": 355.7099112,
+        "bidsvolume": 0.01267379,
+        "value": 0.07890301
+    },
+    {
+        "bidstotalvolume": 355.69723741,
+        "bidsvolume": 7,
+        "value": 0.07891216
+    },
+    {
+        "bidstotalvolume": 348.69723741,
+        "bidsvolume": 0.02908847,
+        "value": 0.07891244
+    },
+    {
+        "bidstotalvolume": 348.66814894000004,
+        "bidsvolume": 0.03231428,
+        "value": 0.07892022
+    },
+    {
+        "bidstotalvolume": 348.63583466000006,
+        "bidsvolume": 0.35453224,
+        "value": 0.07892027
+    },
+    {
+        "bidstotalvolume": 348.28130242000003,
+        "bidsvolume": 0.25322994,
+        "value": 0.07893948
+    },
+    {
+        "bidstotalvolume": 348.02807248000005,
+        "bidsvolume": 3.5,
+        "value": 0.07895333
+    },
+    {
+        "bidstotalvolume": 344.52807248000005,
+        "bidsvolume": 4.2503505,
+        "value": 0.07895603
+    },
+    {
+        "bidstotalvolume": 340.27772198,
+        "bidsvolume": 0.08485468,
+        "value": 0.07895852
+    },
+    {
+        "bidstotalvolume": 340.19286730000005,
+        "bidsvolume": 0.00044823,
+        "value": 0.0789628
+    },
+    {
+        "bidstotalvolume": 340.19241907,
+        "bidsvolume": 0.0094,
+        "value": 0.07898456
+    },
+    {
+        "bidstotalvolume": 340.18301907,
+        "bidsvolume": 321.50403399,
+        "value": 0.079
+    },
+    {
+        "bidstotalvolume": 18.67898508,
+        "bidsvolume": 18.6451,
+        "value": 0.079005
+    },
+    {
+        "bidstotalvolume": 0.03388508,
+        "bidsvolume": 0.00857504,
+        "value": 0.07902
+    },
+    {
+        "bidstotalvolume": 0.02531004,
+        "bidsvolume": 0.02531004,
+        "value": 0.07902001
+    },
+    {
+        "askstotalvolume": 0.03310704,
+        "asksvolume": 0.03310704,
+        "value": 0.07902636
+    },
+    {
+        "askstotalvolume": 7.30765537,
+        "asksvolume": 7.27454833,
+        "value": 0.07913975
+    },
+    {
+        "askstotalvolume": 16.30765537,
+        "asksvolume": 9,
+        "value": 0.07914
+    },
+    {
+        "askstotalvolume": 29.23521161,
+        "asksvolume": 12.92755624,
+        "value": 0.07917463
+    },
+    {
+        "askstotalvolume": 29.314378610000002,
+        "asksvolume": 0.079167,
+        "value": 0.07917696
+    },
+    {
+        "askstotalvolume": 36.314378610000006,
+        "asksvolume": 7,
+        "value": 0.0791975
+    },
+    {
+        "askstotalvolume": 36.318081310000004,
+        "asksvolume": 0.0037027,
+        "value": 0.07922315
+    },
+    {
+        "askstotalvolume": 42.418081310000005,
+        "asksvolume": 6.1,
+        "value": 0.07923352
+    },
+    {
+        "askstotalvolume": 48.418081310000005,
+        "asksvolume": 6,
+        "value": 0.07927096
+    },
+    {
+        "askstotalvolume": 49.33819099000001,
+        "asksvolume": 0.92010968,
+        "value": 0.07927207
+    },
+    {
+        "askstotalvolume": 111.57735797000001,
+        "asksvolume": 62.23916698,
+        "value": 0.07927736
+    },
+    {
+        "askstotalvolume": 116.32685797,
+        "asksvolume": 4.7495,
+        "value": 0.07927737
+    },
+    {
+        "askstotalvolume": 185.57959182000002,
+        "asksvolume": 69.25273385,
+        "value": 0.07929999
+    },
+    {
+        "askstotalvolume": 188.38743485,
+        "asksvolume": 2.80784303,
+        "value": 0.0793
+    },
+    {
+        "askstotalvolume": 191.88743485,
+        "asksvolume": 3.5,
+        "value": 0.07930966
+    },
+    {
+        "askstotalvolume": 192.01346018,
+        "asksvolume": 0.12602533,
+        "value": 0.07934913
+    },
+    {
+        "askstotalvolume": 198.01346018,
+        "asksvolume": 6,
+        "value": 0.07935411
+    },
+    {
+        "askstotalvolume": 198.02346018,
+        "asksvolume": 0.01,
+        "value": 0.07938047
+    },
+    {
+        "askstotalvolume": 199.02346018,
+        "asksvolume": 1,
+        "value": 0.07939462
+    },
+    {
+        "askstotalvolume": 199.02720598,
+        "asksvolume": 0.0037458,
+        "value": 0.0794014
+    },
+    {
+        "askstotalvolume": 255.78960597999998,
+        "asksvolume": 56.7624,
+        "value": 0.07941219
+    },
+    {
+        "askstotalvolume": 255.79622463999996,
+        "asksvolume": 0.00661866,
+        "value": 0.07942863
+    },
+    {
+        "askstotalvolume": 255.79761500999996,
+        "asksvolume": 0.00139037,
+        "value": 0.07943014
+    },
+    {
+        "askstotalvolume": 255.88588816999996,
+        "asksvolume": 0.08827316,
+        "value": 0.0794387
+    },
+    {
+        "askstotalvolume": 259.03546867999995,
+        "asksvolume": 3.14958051,
+        "value": 0.07944311
+    },
+    {
+        "askstotalvolume": 276.0226686799999,
+        "asksvolume": 16.9872,
+        "value": 0.07945785
+    },
+    {
+        "askstotalvolume": 276.02405601999993,
+        "asksvolume": 0.00138734,
+        "value": 0.0794807
+    },
+    {
+        "askstotalvolume": 276.0253291199999,
+        "asksvolume": 0.0012731,
+        "value": 0.07949301
+    },
+    {
+        "askstotalvolume": 276.0277363999999,
+        "asksvolume": 0.00240728,
+        "value": 0.07953375
+    },
+    {
+        "askstotalvolume": 276.0577363999999,
+        "asksvolume": 0.03,
+        "value": 0.07954
+    },
+    {
+        "askstotalvolume": 276.0614726199999,
+        "asksvolume": 0.00373622,
+        "value": 0.0795434
+    },
+    {
+        "askstotalvolume": 276.7320265799999,
+        "asksvolume": 0.67055396,
+        "value": 0.07954436
+    },
+    {
+        "askstotalvolume": 276.7440265799999,
+        "asksvolume": 0.012,
+        "value": 0.07954442
+    },
+    {
+        "askstotalvolume": 276.9972166999999,
+        "asksvolume": 0.25319012,
+        "value": 0.07954797
+    },
+    {
+        "askstotalvolume": 276.9988582399999,
+        "asksvolume": 0.00164154,
+        "value": 0.07955562
+    },
+    {
+        "askstotalvolume": 277.02941815999986,
+        "asksvolume": 0.03055992,
+        "value": 0.07957951
+    },
+    {
+        "askstotalvolume": 277.66287138999985,
+        "asksvolume": 0.63345323,
+        "value": 0.079585
+    },
+    {
+        "askstotalvolume": 278.3762648599999,
+        "asksvolume": 0.71339347,
+        "value": 0.07958901
+    },
+    {
+        "askstotalvolume": 278.70077867999987,
+        "asksvolume": 0.32451382,
+        "value": 0.07962721
+    },
+    {
+        "askstotalvolume": 278.8087955299999,
+        "asksvolume": 0.10801685,
+        "value": 0.07963824
+    },
+    {
+        "askstotalvolume": 350.76879552999986,
+        "asksvolume": 71.96,
+        "value": 0.07964314
+    },
+    {
+        "askstotalvolume": 350.88822962999984,
+        "asksvolume": 0.1194341,
+        "value": 0.07964315
+    },
+    {
+        "askstotalvolume": 351.04656262999987,
+        "asksvolume": 0.158333,
+        "value": 0.07966681
+    },
+    {
+        "askstotalvolume": 411.98674482999985,
+        "asksvolume": 60.9401822,
+        "value": 0.0796713
+    },
+    {
+        "askstotalvolume": 577.6647448299998,
+        "asksvolume": 165.678,
+        "value": 0.07967131
+    },
+    {
+        "askstotalvolume": 1145.2887448299998,
+        "asksvolume": 567.624,
+        "value": 0.07967134
+    },
+    {
+        "askstotalvolume": 1147.5973854899999,
+        "asksvolume": 2.30864066,
+        "value": 0.07969
+    },
+    {
+        "askstotalvolume": 1147.5993717,
+        "asksvolume": 0.00198621,
+        "value": 0.07969027
+    },
+    {
+        "askstotalvolume": 1148.14140432,
+        "asksvolume": 0.54203262,
+        "value": 0.0797
+    },
+    {
+        "askstotalvolume": 1148.26868643,
+        "asksvolume": 0.12728211,
+        "value": 0.07970681
+    }
+]
