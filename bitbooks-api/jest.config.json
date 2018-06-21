@@ -1,0 +1,8 @@
+{
+  "name": "bitbooks-api",
+  "jest": {
+    "verbose": true,
+    "rootDir": "./test",
+    "testRegex": "*.test.js"
+  }
+}
