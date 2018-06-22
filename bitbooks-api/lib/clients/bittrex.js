@@ -27,6 +27,53 @@ module.exports = {
     return null
   },
 
+  subscribe: function (opts, callback) {
+    const markets = ['BTC-ETH']
+
+    // NOTE: the WS API does not give the initial state of the OrderBooks
+    // so we use the REST Api to grab the current state first, then use the
+    // socket for modifications
+    this.getOrderBook({
+      market: markets[0]
+    }, (err, data) => {
+      if (err) return callback(err)
+
+      log(`retrieved ${this.name} current order book`)
+
+      // propagate as a message
+      this.emit({
+        type: 'init',
+        data: data
+      }, callback)
+
+      // connect to the WS API
+      this.connect(opts, () => {
+        log(`connected to ${this.name} exchange`)
+
+        // TODO: pull subscriptions from opts/config
+        bittrex.websockets.subscribe(markets, (data) => {
+          this.emit(data, callback)
+        })
+      })
+    })
+  },
+
+  connect: function (opts, callback) {
+    bittrex.websockets.client(callback)
+  },
+
+  disconnect: function () {
+    bittrex.websockets.disconnect()
+  },
+
+  // emit messages
+  // NOTE: bittrex groups these together in a array, but we want individual
+  // updates/messages per emission
+  emit: function (message, callback) {
+    let msgs = this.process(message)
+    if (msgs && msgs.length) msgs.forEach(callback)
+  },
+
   format: function (message) {
     let type = message.M
     let data = message.A || []
@@ -87,53 +134,6 @@ module.exports = {
       }))
       return memo
     }, [])
-  },
-
-  // emit messages
-  // NOTE: bittrex groups these together in a array, but we want individual
-  // updates/messages per emission
-  emit: function (message, callback) {
-    let msgs = this.process(message)
-    if (msgs && msgs.length) msgs.forEach(callback)
-  },
-
-  connect: function (opts, callback) {
-    bittrex.websockets.client(callback)
-  },
-
-  subscribe: function (opts, callback) {
-    const markets = ['BTC-ETH']
-
-    // NOTE: the WS API does not give the initial state of the OrderBooks
-    // so we use the REST Api to grab the current state first, then use the
-    // socket for modifications
-    this.getOrderBook({
-      market: markets[0]
-    }, (err, data) => {
-      if (err) return callback(err)
-
-      log(`retrieved ${this.name} current order book`)
-
-      // propagate as a message
-      this.emit({
-        type: 'init',
-        data: data
-      }, callback)
-
-      // connect to the WS API
-      this.connect(opts, () => {
-        log(`connected to ${this.name} exchange`)
-
-        // TODO: pull subscriptions from opts/config
-        bittrex.websockets.subscribe(markets, (data) => {
-          this.emit(data, callback)
-        })
-      })
-    })
-  },
-
-  disconnect: function () {
-    bittrex.websockets.disconnect()
   },
 
   getOrderBook: function (opts, callback) {
