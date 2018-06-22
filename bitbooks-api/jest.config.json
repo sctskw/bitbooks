@@ -12,5 +12,6 @@
     "testMatch": [
         "**/*.test.js"
     ],
+    "silent": true,
     "verbose": true
 }
