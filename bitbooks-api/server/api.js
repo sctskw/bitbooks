@@ -1,4 +1,4 @@
-const API = require('./routes')
+let API = require('./routes')
 
 module.exports.mount = function (server, path) {
   // force to always be JSON

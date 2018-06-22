@@ -11,7 +11,8 @@
                 "jest": true
             },
             "files": [
-                "**/*.test.js"
+                "**/*.test.js",
+                "**/*unit*.js"
             ],
             "plugins": [
                 "jest"
