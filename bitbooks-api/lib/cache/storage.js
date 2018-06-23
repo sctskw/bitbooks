@@ -1,6 +1,10 @@
-const Promisify = require('util').promisify
 const EventEmitter = require('events').EventEmitter
 const Redis = require('redis')
+
+// NOTE: would prefer to use Redis for caching, but it's difficult to guarantee immediate
+// consistency since you don't know when set() actually finishes. This causes data discrepancies
+// so for now we just use an in-memory cache until a real DB is needed
+const cache = require('memory-cache')
 
 // Redis.debug_mode = true
 
@@ -8,76 +12,84 @@ class Storage extends EventEmitter {
   constructor () {
     super()
 
-    this._cache = Redis.createClient(process.env.REDIS_URL)
-
-    // attach as promise
-    this._get = Promisify(this._cache.get).bind(this._cache)
-    this._set = Promisify(this._cache.set).bind(this._cache)
+    this._pub = Redis.createClient(process.env.REDIS_URL)
+    this._cache = new cache.Cache()
   }
 
-  async set (key, data) {
-    await this._cache.set(key, JSON.stringify(data))
+  set (key, data) {
+    return this._cache.put(key, JSON.stringify(data))
   }
 
-  async get (key) {
-    let value = await this._get(key)
-    return JSON.parse(value || {})
+  get (key) {
+    try {
+      return JSON.parse(this._cache.get(key))
+    } catch (err) {
+      return null
+    }
   }
 
-  async init (envelope) {
+  init (envelope) {
     let env = _unwrap(envelope)
 
     // update the values
     this.set(env.k, env.d)
 
-    let value = await this.get(env.k)
-
-    this.publish(env, value)
+    this.publish(env, this.get(env.k))
   }
 
-  async patch (envelope) {
-    let env = _unwrap(envelope)
-    let data = env.d
-    let type = data.type
-    let curr = await this.get(env.k) || {}
+  patch (envelope, callback = function () {}) {
+    try {
+      let env = _unwrap(envelope)
+      let data = env.d
+      let type = data.type
+      let op = /bid/ig.test(type) ? 'bids' : 'asks'
 
-    if (/bid/ig.test(type)) _patch('bids', curr, data)
-    if (/ask/ig.test(type)) _patch('asks', curr, data)
+      // get current dataset
+      let curr = this.get(env.k)
 
-    // update the cache
-    await this.set(env.k, curr)
+      // create new dataset
+      let replace = _patch(op, curr, data)
 
-    let value = await this.get(env.k)
+      // update the cache
+      this.set(env.k, replace)
 
-    this.publish(env, value)
+      // broadcast the new data
+      this.publish(env, this.get(env.k))
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   publish (env, data) {
-    this._cache.publish(env.k, JSON.stringify(data))
+    this._pub.publish(env.k, JSON.stringify(data))
     this.emit('change', env.e, env.m, data)
   }
 }
 
 function _patch (type, cache, data) {
+  try {
+    let amount = parseFloat(data.amount)
+    let rate = data.rate.toString()
+    let copy = JSON.parse(JSON.stringify(cache || {})) // clone
 
-  let amount = parseFloat(data.amount)
-  let rate = data.rate.toString()
+    // update the bids at this rate
+    if (amount > 0) {
+      copy[type][rate] = amount
+      console.log(`patched [${type}] ${rate} => ${amount}`)
+    }
 
-  // update the bids at this rate
-  if (amount > 0) {
-    cache[type][rate] = amount
-    return true
+    // clear the bids at this rate since the volume is 0 or less
+    if (amount <= 0) {
+      copy[type][rate] = 0
+      copy[type][rate] = null
+      delete copy[type][rate]
+      console.log(`patched [${type}] ${rate} => ${amount}`)
+    }
+
+    return copy
+  } catch (err) {
+    console.log(err)
   }
-
-  // clear the bids at this rate since the volume is 0 or less
-  if (amount <= 0) {
-    cache[type][rate] = 0
-    cache[type][rate] = null
-    delete cache[type][rate]
-    return true
-  }
-
-  return false
 }
 
 function _unwrap (envelope) {

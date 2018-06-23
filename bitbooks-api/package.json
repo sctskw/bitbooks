@@ -15,6 +15,7 @@
   "author": "Scott Skow",
   "license": "ISC",
   "dependencies": {
+    "memory-cache": "^0.2.0",
     "minimist": "^1.2.0",
     "node-cache": "^4.2.0",
     "node.bittrex.api": "^1.0.0",
