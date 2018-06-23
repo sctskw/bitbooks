@@ -2,18 +2,9 @@ import 'amcharts3'
 import 'amcharts3/amcharts/serial'
 import 'amcharts3/amcharts/plugins/dataloader'
 
-function createChart (data) {
-  return window.AmCharts.makeChart('ob-chart', {
-
-    // custom loader function to dynamically update
-    load: function (data) {
-      this.dataProvider = data
-      this.validateData()
-    },
-
+function createSeries (opts) {
+  return createChart(Object.assign(opts, {
     type: 'serial',
-    theme: 'light',
-    dataProvider: [],
     graphs: [{
       id: 'bids',
       fillAlphas: 0.1,
@@ -26,7 +17,7 @@ function createChart (data) {
     }, {
       id: 'asks',
       fillAlphas: 0.1,
-      'lineAlpha': 1,
+      lineAlpha: 1,
       lineThickness: 2,
       lineColor: '#f00',
       type: 'step',
@@ -48,40 +39,82 @@ function createChart (data) {
       clustered: false,
       valueField: 'asks.volume',
       showBalloon: false
-    }],
-    categoryField: 'value',
-    chartCursor: {},
-    balloon: {
-      textAlign: 'left'
+    }]
+  }))
+}
+
+function createChart (opts) {
+  let id = opts && opts.id
+  let title = opts && opts.title
+
+  if (!id) throw new Error('no ID provided for chart')
+
+  delete opts.id
+  delete opts.title
+
+  return window.AmCharts.makeChart(id, Object.assign({
+    // custom loader function to dynamically update
+    load: function (data) {
+      this.dataProvider = data
+      this.validateData()
     },
+    theme: 'light',
+    categoryField: 'value',
     valueAxes: [{
       title: 'Volume'
     }],
     categoryAxis: {
-      title: 'Price (BTC/ETH)',
+      title: title,
       minHorizontalGap: 100,
       startOnAxis: true,
       showFirstLabel: false,
       showLastLabel: false
+    },
+    dataProvider: [],
+    chartCursor: {},
+    balloon: {
+      textAlign: 'left'
     }
-  })
+  }, opts))
 }
 
 function balloon (item, graph) {
   let type = graph.id
   let chart = graph.chart
+  let data = item.dataContext
+  let exchanges = data.exchanges
 
-  return [
+  let value = data.value
+  let total = data[`${type}.volume.total`]
+  let volume = data[`${type}.volume`]
+
+  let html = [
     'Bid: <strong>',
-    formatNumber(item.dataContext.value, chart, 4),
+    formatNumber(value, chart, 4),
     '</strong><br />',
     'Total Volume: <strong>',
-    formatNumber(item.dataContext[`${type}.volume.total`], chart, 4),
+    formatNumber(total, chart, 4),
     '</strong><br />',
     'Volume: <strong>',
-    formatNumber(item.dataContext[`${type}.volume`], chart, 4),
-    '</strong>'
-  ].join('')
+    formatNumber(volume, chart, 4),
+    '</strong><br />',
+    '---------------------'
+  ]
+
+  for (let ex in exchanges) {
+    let title = ex.split('::')[0].toUpperCase()
+    let value = exchanges[ex]
+    let sub = [
+      '<br/>',
+      `${title} Volume: <strong>`,
+      formatNumber(value, chart, 4),
+      '</strong>'
+    ]
+
+    html = html.concat(sub)
+  }
+
+  return html.join('')
 }
 
 function formatNumber (val, chart, precision) {
@@ -92,4 +125,7 @@ function formatNumber (val, chart, precision) {
   })
 }
 
-export default { createChart }
+export default {
+  createChart,
+  createSeries
+}

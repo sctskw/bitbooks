@@ -30,10 +30,18 @@ export default {
         asks: {}
       }
 
-      function group (items) {
+      function group (exchange, items) {
         return items.reduce(function (memo, item) {
-          if (!memo[item.value.toString()]) memo[item.value] = []
-          memo[item.value.toString()].push(item)
+          let key = item.value.toString()
+
+          if (!memo[key]) memo[item.value] = {}
+          if (!memo[key][exchange]) memo[key][exchange] = []
+
+          memo[key][exchange].push(Object.assign({
+            // copy the exchange over for later visual sorting
+            exchange: exchange
+          }, item))
+
           return memo
         }, {})
       }
@@ -44,7 +52,12 @@ export default {
             if (!dest[key]) dest[key] = []
             dest[key] = dest[key].concat(origin[key])
           }
+          if (origin[key] instanceof Object) {
+            dest[key] = merge(dest[key] || {}, origin[key])
+          }
         }
+
+        return dest
       }
 
       // NOTE: the chart will converge on the current price, so we really only
@@ -92,11 +105,22 @@ export default {
 
       function quantify (items) {
         return Object.keys(items).map(function (value) {
-          let values = items[value]
-          return {
-            volume: sum(values),
-            value: value
-          }
+          let exchanges = items[value]
+
+          return Object.keys(exchanges)
+            .reduce(function (memo, exchange) {
+              let values = exchanges[exchange]
+              let total = sum(values)
+
+              memo.exchanges[exchange] = total
+              memo.volume += total
+
+              return memo
+            }, {
+              volume: 0,
+              value: value,
+              exchanges: {}
+            })
         })
       }
 
@@ -108,12 +132,15 @@ export default {
             let total = memo.total + volume
 
             let result = {}
+            result.exchanges = item.exchanges // copy this
             result[`${type}.volume.total`] = total
             result[`${type}.volume`] = volume
             result.value = value
 
             memo.total = total
-            memo.items.push(result)
+            memo.items.push(Object.assign({}, result, {
+              exchanges: item.exchanges
+            }))
 
             return memo
           }, {
@@ -125,8 +152,8 @@ export default {
       // index the order volumes by price for all exchanges
       for (let ex in exchanges) {
         let data = exchanges[ex]
-        merge(results.bids, group(data.bids))
-        merge(results.asks, group(data.asks))
+        merge(results.bids, group(ex, data.bids))
+        merge(results.asks, group(ex, data.asks))
       }
 
       // calculate the current orders
@@ -145,7 +172,10 @@ export default {
   },
 
   created: function () {
-    let chart = Chart.createChart()
+    let chart = Chart.createSeries({
+      id: 'ob-chart',
+      title: 'Price (BTC/ETH)'
+    })
 
     this.$store.watch(this.getOrders, (data) => {
       chart.load(this.getChartData(data))
