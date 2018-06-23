@@ -42,12 +42,12 @@ export default {
         let bidVolume = Math.ceil(bids.reduce(function (sum, key) {
           sum += parseFloat(exchange.bids[key])
           return sum
-        }, struct.bids.volume))
+        }, 0))
 
         let askVolume = Math.ceil(asks.reduce(function (sum, val) {
           sum += parseFloat(exchange.asks[val])
           return sum
-        }, struct.asks.volume))
+        }, 0))
 
         struct.bids = {
           count: bids.length,

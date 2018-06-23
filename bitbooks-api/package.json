@@ -9,7 +9,8 @@
     "test:watch": "./node_modules/.bin/jest --watchAll --config jest.config.json",
     "test:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand --config jest.config.json",
     "lint": "eslint .",
-    "feeders": "./bin/start_feeds.sh"
+    "feeders": "./bin/start_feeds.sh",
+    "feeds": "./bin/start_feeds.sh"
   },
   "author": "Scott Skow",
   "license": "ISC",

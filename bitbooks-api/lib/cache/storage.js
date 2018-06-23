@@ -45,7 +45,7 @@ class Storage extends EventEmitter {
     if (/ask/ig.test(type)) _patch('asks', curr, data)
 
     // update the cache
-    this.set(env.k, curr)
+    await this.set(env.k, curr)
 
     let value = await this.get(env.k)
 
@@ -59,13 +59,25 @@ class Storage extends EventEmitter {
 }
 
 function _patch (type, cache, data) {
-  let amount = Math.floor(data.amount)
+
+  let amount = parseFloat(data.amount)
+  let rate = data.rate.toString()
 
   // update the bids at this rate
-  if (amount > 0) cache[type][data.rate] = data.amount
+  if (amount > 0) {
+    cache[type][rate] = amount
+    return true
+  }
 
   // clear the bids at this rate since the volume is 0 or less
-  if (amount <= 0) delete cache['bids'][data.rate]
+  if (amount <= 0) {
+    cache[type][rate] = 0
+    cache[type][rate] = null
+    delete cache[type][rate]
+    return true
+  }
+
+  return false
 }
 
 function _unwrap (envelope) {

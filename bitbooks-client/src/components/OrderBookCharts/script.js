@@ -139,8 +139,6 @@ export default {
       bids = normalize('bids', bids).items.reverse()
       asks = normalize('asks', asks).items
 
-      debugger
-
       return [].concat(bids, asks)
     }
 
