@@ -1,6 +1,6 @@
 const EXCHANGES = {
   bittrex: require('./bittrex'),
-  poloniex: require('./poloniex.js')
+  poloniex: require('./poloniex')
 }
 
 function subscribe (opts, callback) {
@@ -28,6 +28,7 @@ function subscribeAll (opts, onError, onMessage) {
 
 module.exports = {
   subscribe,
+  subscribeAll,
 
   // expose all available Exchanges
   EXCHANGES,
