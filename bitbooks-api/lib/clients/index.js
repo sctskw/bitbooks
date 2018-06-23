@@ -1,5 +1,5 @@
 const EXCHANGES = {
-  bittrex: require('./bittrex.js'),
+  bittrex: require('./bittrex'),
   poloniex: require('./poloniex.js')
 }
 

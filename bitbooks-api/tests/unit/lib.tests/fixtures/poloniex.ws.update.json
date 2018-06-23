@@ -1,0 +1,290 @@
+[
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "0.00000000",
+                    "rate": "0.07687470",
+                    "type": "ask"
+                },
+                "type": "orderBookRemove"
+            },
+            {
+                "data": {
+                    "amount": "83.35000000",
+                    "rate": "0.07686928",
+                    "type": "ask"
+                },
+                "type": "orderBookModify"
+            }
+        ],
+        "seq": 544189939
+    },
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "0.01893000",
+                    "rate": "0.08097800",
+                    "type": "ask"
+                },
+                "type": "orderBookModify"
+            }
+        ],
+        "seq": 544189940
+    },
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "0.00000000",
+                    "rate": "0.07648942",
+                    "type": "ask"
+                },
+                "type": "orderBookRemove"
+            }
+        ],
+        "seq": 544189941
+    },
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "0.00000000",
+                    "rate": "0.07648914",
+                    "type": "ask"
+                },
+                "type": "orderBookRemove"
+            },
+            {
+                "data": {
+                    "amount": "7.18393920",
+                    "rate": "0.07655174",
+                    "type": "ask"
+                },
+                "type": "orderBookModify"
+            }
+        ],
+        "seq": 544189942
+    },
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "0.00000000",
+                    "rate": "0.07687469",
+                    "type": "ask"
+                },
+                "type": "orderBookRemove"
+            },
+            {
+                "data": {
+                    "amount": "50.47788677",
+                    "rate": "0.07686927",
+                    "type": "ask"
+                },
+                "type": "orderBookModify"
+            }
+        ],
+        "seq": 544189943
+    },
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "0.00000000",
+                    "rate": "0.07646076",
+                    "type": "bid"
+                },
+                "type": "orderBookRemove"
+            },
+            {
+                "data": {
+                    "amount": "0.02821976",
+                    "rate": "0.07645581",
+                    "type": "bid"
+                },
+                "type": "orderBookModify"
+            }
+        ],
+        "seq": 544189944
+    },
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "0.00000000",
+                    "rate": "0.07604969",
+                    "type": "bid"
+                },
+                "type": "orderBookRemove"
+            },
+            {
+                "data": {
+                    "amount": "64.50172460",
+                    "rate": "0.07616036",
+                    "type": "bid"
+                },
+                "type": "orderBookModify"
+            }
+        ],
+        "seq": 544189945
+    },
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "0.00000000",
+                    "rate": "0.07249232",
+                    "type": "bid"
+                },
+                "type": "orderBookRemove"
+            },
+            {
+                "data": {
+                    "amount": "1.65534744",
+                    "rate": "0.07249233",
+                    "type": "bid"
+                },
+                "type": "orderBookModify"
+            }
+        ],
+        "seq": 544189946
+    },
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "0.00000000",
+                    "rate": "0.07628000",
+                    "type": "bid"
+                },
+                "type": "orderBookRemove"
+            }
+        ],
+        "seq": 544189947
+    },
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "0.00000000",
+                    "rate": "0.07616035",
+                    "type": "bid"
+                },
+                "type": "orderBookRemove"
+            },
+            {
+                "data": {
+                    "amount": "68.08262762",
+                    "rate": "0.07616037",
+                    "type": "bid"
+                },
+                "type": "orderBookModify"
+            }
+        ],
+        "seq": 544189948
+    },
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "0.00000000",
+                    "rate": "0.07670108",
+                    "type": "ask"
+                },
+                "type": "orderBookRemove"
+            }
+        ],
+        "seq": 544189949
+    },
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "0.00000000",
+                    "rate": "0.07648944",
+                    "type": "ask"
+                },
+                "type": "orderBookRemove"
+            }
+        ],
+        "seq": 544189950
+    },
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "0.00000000",
+                    "rate": "0.07615500",
+                    "type": "bid"
+                },
+                "type": "orderBookRemove"
+            }
+        ],
+        "seq": 544189951
+    },
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "0.00000000",
+                    "rate": "0.07658000",
+                    "type": "ask"
+                },
+                "type": "orderBookRemove"
+            }
+        ],
+        "seq": 544189952
+    },
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "0.00000000",
+                    "rate": "0.07401847",
+                    "type": "bid"
+                },
+                "type": "orderBookRemove"
+            },
+            {
+                "data": {
+                    "amount": "0.06755069",
+                    "rate": "0.07401848",
+                    "type": "bid"
+                },
+                "type": "orderBookModify"
+            }
+        ],
+        "seq": 544189953
+    },
+    {
+        "channel": "BTC_ETH",
+        "data": [
+            {
+                "data": {
+                    "amount": "21.38520000",
+                    "rate": "0.07654500",
+                    "type": "ask"
+                },
+                "type": "orderBookModify"
+            }
+        ],
+        "seq": 544189954
+    }
+]

@@ -1,0 +1,152 @@
+[
+    {
+        "A": [
+            {
+                "Buys": [
+                    {
+                        "Quantity": 35.28822522,
+                        "Rate": 0.07638472,
+                        "Type": 2
+                    }
+                ],
+                "Fills": [],
+                "MarketName": "BTC-ETH",
+                "Nounce": 8094,
+                "Sells": [
+                    {
+                        "Quantity": 11.14244737,
+                        "Rate": 0.0768795,
+                        "Type": 2
+                    },
+                    {
+                        "Quantity": 6.50066521,
+                        "Rate": 0.07691521,
+                        "Type": 0
+                    },
+                    {
+                        "Quantity": 0,
+                        "Rate": 0.0769231,
+                        "Type": 1
+                    }
+                ]
+            }
+        ],
+        "H": "CoreHub",
+        "M": "updateExchangeState"
+    },
+    {
+        "A": [
+            {
+                "Buys": [
+                    {
+                        "Quantity": 0,
+                        "Rate": 0.07624521,
+                        "Type": 1
+                    },
+                    {
+                        "Quantity": 0.59322671,
+                        "Rate": 0.07624511,
+                        "Type": 0
+                    },
+                    {
+                        "Quantity": 0,
+                        "Rate": 0.07578202,
+                        "Type": 1
+                    },
+                    {
+                        "Quantity": 0.26366903,
+                        "Rate": 0.07558785,
+                        "Type": 0
+                    },
+                    {
+                        "Quantity": 39.0214,
+                        "Rate": 0.07509459,
+                        "Type": 0
+                    },
+                    {
+                        "Quantity": 10.58525191,
+                        "Rate": 0.07507169,
+                        "Type": 0
+                    },
+                    {
+                        "Quantity": 0,
+                        "Rate": 0.07492017,
+                        "Type": 1
+                    },
+                    {
+                        "Quantity": 0,
+                        "Rate": 0.06902,
+                        "Type": 1
+                    }
+                ],
+                "Fills": [],
+                "MarketName": "BTC-ETH",
+                "Nounce": 8095,
+                "Sells": [
+                    {
+                        "Quantity": 0,
+                        "Rate": 0.07691521,
+                        "Type": 1
+                    },
+                    {
+                        "Quantity": 1.95643436,
+                        "Rate": 0.08097,
+                        "Type": 0
+                    }
+                ]
+            }
+        ],
+        "H": "CoreHub",
+        "M": "updateExchangeState"
+    },
+    {
+        "A": [
+            {
+                "Buys": [
+                    {
+                        "Quantity": 35.15730899,
+                        "Rate": 0.07638472,
+                        "Type": 2
+                    },
+                    {
+                        "Quantity": 40.0176,
+                        "Rate": 0.0750946,
+                        "Type": 0
+                    },
+                    {
+                        "Quantity": 0,
+                        "Rate": 0.07509459,
+                        "Type": 1
+                    },
+                    {
+                        "Quantity": 0,
+                        "Rate": 0.0744751,
+                        "Type": 1
+                    },
+                    {
+                        "Quantity": 0.08126,
+                        "Rate": 0.06902,
+                        "Type": 0
+                    }
+                ],
+                "Fills": [],
+                "MarketName": "BTC-ETH",
+                "Nounce": 8096,
+                "Sells": [
+                    {
+                        "Quantity": 6.5010554,
+                        "Rate": 0.07691059,
+                        "Type": 0
+                    },
+                    {
+                        "Quantity": 0,
+                        "Rate": 0.08097,
+                        "Type": 1
+                    }
+                ]
+            }
+        ],
+        "H": "CoreHub",
+        "M": "updateExchangeState"
+    }
+]

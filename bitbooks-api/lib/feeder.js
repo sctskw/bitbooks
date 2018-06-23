@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+const path = require('path')
+
+global.__appbase = path.resolve(__dirname, '..')
 
 const Parser = require('minimist')
 const Cache = require('./cache/storage')
@@ -16,6 +19,6 @@ Clients.subscribe({
     Storage[message.type](message)
   } catch (err) {
     console.error(`fail: ${err}`)
-    process.exit(1)
+    process.exit(0)
   }
 })
