@@ -1,16 +1,44 @@
-<v-data-table
-  :headers="headers"
-  :items="desserts"
-  hide-actions
-  class="elevation-1"
->
-  <template slot="items" slot-scope="props">
-    <td>{{ props.item.name }}</td>
-    <td class="text-xs-right">{{ props.item.calories }}</td>
-    <td class="text-xs-right">{{ props.item.fat }}</td>
-    <td class="text-xs-right">{{ props.item.carbs }}</td>
-    <td class="text-xs-right">{{ props.item.protein }}</td>
-    <td class="text-xs-right">{{ props.item.iron }}</td>
-  </template>
+<v-container grid-list-md class="order-book-grid">
+  <v-layout row wrap>
+    <v-flex xs6>
+      <h1>Bids</h1>
+    </v-flex>
+    <v-flex xs6>
+      <h1>Asks</h1>
+    </v-flex>
+  </v-layout>
+  <v-layout row wrap>
+    <v-flex xs6 class="price-list">
+      <v-data-table
+        :headers="headers"
+        :items="bids"
+        hide-actions
+        class="elevation-1"
+        >
+        <template slot="items" slot-scope="props">
+          <td>{{ props.item.name }}</td>
+          <td class="text-xs-right">{{ props.item.type }}</td>
+          <td class="text-xs-right">{{ props.item.volume }}</td>
+          <td class="text-xs-right">{{ props.item.price }}</td>
+        </template>
+      </v-data-table>
+    </v-flex>
+    <v-flex xs6 class="price-list">
+      <v-data-table
+        :header-text="Asks"
+        :headers="headers"
+        :items="asks"
+        hide-actions
+        class="elevation-1"
+        >
+        <template slot="items" slot-scope="props">
+          <td>{{ props.item.name }}</td>
+          <td class="text-xs-right">{{ props.item.type }}</td>
+          <td class="text-xs-right">{{ props.item.volume }}</td>
+          <td class="text-xs-right">{{ props.item.price }}</td>
+        </template>
+      </v-data-table>
+    </v-flex>
+  </v-layout>
+</v-container>
 
-</v-data-table>

@@ -1,4 +1,7 @@
 .order-book-grid {
-
-
+  .price-list {
+    max-height: 1000x;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
 }
