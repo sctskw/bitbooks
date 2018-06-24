@@ -5,15 +5,11 @@ export default {
 
   name: 'OrderBookCharts',
 
-  props: {
-    chart: null
-  },
-
   computed: {
     ...mapGetters({
       connected: 'isConnected'
     }),
-    ...mapGetters({
+    ...mapGetters('OrderBook', {
       orders: 'getOrders'
     })
   },
@@ -21,8 +17,6 @@ export default {
   methods: {
 
     ...mapGetters(['isConnected']),
-
-    ...mapGetters('OrderBook', ['getOrders']),
 
     getData: function (exchanges) {
       let results = {
@@ -240,21 +234,30 @@ export default {
     }
   },
 
-  created: function () {
-    let Series = Chart.createDepth({
+  mounted: function () {
+
+    let Depth = Chart.createDepth({
       id: 'depth-chart',
       title: 'Price (BTC/ETH)'
     })
 
-    let NegBar = Chart.createNegativeBar({
+    let Neg = Chart.createNegativeBar({
       id: 'neg-bar-chart',
       title: 'Price (BTC/ETH)'
     })
 
-    this.$store.watch(this.getOrders, (data) => {
-      Series.load(this.getSeriesData(data))
-      NegBar.load(this.getNegBarData(data))
+    this.$watch('orders', (data) => {
+      Depth.load(this.getSeriesData(data))
+      Neg.load(this.getNegBarData(data))
     })
-  }
 
+    // force it
+    setTimeout(() => {
+      this.$store.dispatch('OrderBook/setOrders')
+    }, 1000)
+  },
+
+  beforeDestroy: function() {
+    window.AmCharts.clear() //clear out the junk
+  }
 }

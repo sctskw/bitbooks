@@ -35,7 +35,7 @@ export default {
     ...mapGetters({
       connected: 'isConnected'
     }),
-    ...mapGetters({
+    ...mapGetters('OrderBook', {
       orders: 'getOrders'
     })
   },
@@ -43,8 +43,6 @@ export default {
   methods: {
 
     ...mapGetters(['isConnected']),
-
-    ...mapGetters('OrderBook', ['getOrders']),
 
     getBooks: function (exchanges) {
       function process (data) {
@@ -97,7 +95,7 @@ export default {
   },
 
   created: function () {
-    this.$store.watch(this.getOrders, (data) => {
+    this.$watch('orders', (data) => {
       let orders = this.getBooks(data)
       this.$data.bids = orders.bids.reverse()
       this.$data.asks = orders.asks.reverse()
