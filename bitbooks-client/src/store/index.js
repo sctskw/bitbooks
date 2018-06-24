@@ -17,6 +17,7 @@ export default new Vuex.Store({
   state: {
     connected: false,
     updated: 0,
+    interval: 30000,
     data: null
   },
 
@@ -78,7 +79,9 @@ export default new Vuex.Store({
     },
 
     update: function (context, data) {
-      let refresh = (Date.now() - parseInt(this.state.updated)) > 10000
+      let interval = this.state.interval || 10000
+      let last = parseInt(this.state.updated)
+      let refresh = (Date.now() - last) > interval
 
       // check last time we updated so we don't spam
       if (!refresh) return false

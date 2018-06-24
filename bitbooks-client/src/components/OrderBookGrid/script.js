@@ -6,202 +6,28 @@ export default {
 
   data: function () {
     return {
-      text: 'Asks',
+      bids: [],
+      asks: [],
       headers: [
         {
           text: 'Exchange',
-          align: 'left',
+          align: 'center',
           sortable: false,
-          value: 'name'
+          value: 'exchange'
         },
-        { text: 'Type', value: 'type' },
-        { text: 'Quanity/Volume', value: 'volume' },
-        { text: 'Price (ETH)', value: 'price' }
-      ],
-
-      bids: [{
-        name: 'poloniex',
-        type: 'bid',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
+        {
+          text: 'Price',
+          value: 'price',
+          sortable: false,
+          align: 'right'
+        },
+        {
+          text: 'Quantity',
+          value: 'volume',
+          sortable: false,
+          align: 'right'
         }
-      }, {
-        name: 'bittrex',
-        type: 'bid',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'poloniex',
-        type: 'bid',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'bittrex',
-        type: 'bid',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'poloniex',
-        type: 'bid',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'bittrex',
-        type: 'bid',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'poloniex',
-        type: 'bid',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'bittrex',
-        type: 'bid',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'poloniex',
-        type: 'bid',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'bittrex',
-        type: 'bid',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'poloniex',
-        type: 'bid',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'bittrex',
-        type: 'bid',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'poloniex',
-        type: 'bid',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'bittrex',
-        type: 'bid',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'poloniex',
-        type: 'bid',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }],
-
-      asks: [{
-        name: 'poloniex',
-        type: 'ask',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'bittrex',
-        type: 'ask',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'poloniex',
-        type: 'ask',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'bittrex',
-        type: 'ask',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }, {
-        name: 'poloniex',
-        type: 'ask',
-        volume: 21.11122,
-        price: 1.3,
-        prices: {
-          eth: 1.3,
-          btc: 0.0005
-        }
-      }]
+      ]
     }
   },
 
@@ -220,15 +46,61 @@ export default {
 
     ...mapGetters('OrderBook', ['getOrders']),
 
-    getBooks: function (data) {
+    getBooks: function (exchanges) {
+      function process (data) {
+        return data.items.map((item) => {
+          return {
+            type: data.type,
+            exchange: data.exchange.split('::')[0],
+            volume: item.volume,
+            price: item.value
+          }
+        })
+      }
 
+      function sortBy (a, b, key) {
+        return a[key] - b[key]
+      }
+
+      // function sortByVolume (a, b) {
+      //   return sortBy(a, b, 'volume')
+      // }
+
+      function sortByPrice (a, b) {
+        return sortBy(a, b, 'price')
+      }
+
+      let results = {
+        asks: [],
+        bids: []
+      }
+
+      for (let ex in exchanges) {
+        let asks = process({
+          type: 'ask',
+          exchange: ex,
+          items: exchanges[ex].asks
+        }).sort(sortByPrice)
+
+        let bids = process({
+          type: 'bid',
+          exchange: ex,
+          items: exchanges[ex].bids
+        }).sort(sortByPrice)
+
+        results.asks = results.asks.concat(asks)
+        results.bids = results.bids.concat(bids)
+      }
+
+      return results
     }
-
   },
 
   created: function () {
     this.$store.watch(this.getOrders, (data) => {
-      console.log(this.getBooks(data))
+      let orders = this.getBooks(data)
+      this.$data.bids = orders.bids.reverse()
+      this.$data.asks = orders.asks.reverse()
     })
   }
 
