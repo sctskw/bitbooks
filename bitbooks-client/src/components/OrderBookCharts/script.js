@@ -251,10 +251,10 @@ export default {
       Neg.load(this.getNegBarData(data))
     })
 
-    // force it
+    // force it in case data isn't fresh yet
     setTimeout(() => {
       this.$store.dispatch('OrderBook/setOrders')
-    }, 1000)
+    }, 250)
   },
 
   beforeDestroy: function() {
