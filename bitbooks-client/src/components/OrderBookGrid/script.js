@@ -98,7 +98,7 @@ export default {
     this.$watch('orders', (data) => {
       let orders = this.getBooks(data)
       this.$data.bids = orders.bids.reverse()
-      this.$data.asks = orders.asks.reverse()
+      this.$data.asks = orders.asks
     })
   }
 
