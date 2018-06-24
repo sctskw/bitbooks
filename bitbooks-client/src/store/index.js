@@ -17,7 +17,7 @@ export default new Vuex.Store({
   state: {
     connected: false,
     updated: 0,
-    interval: 30000,
+    interval: 15000,
     data: null
   },
 
