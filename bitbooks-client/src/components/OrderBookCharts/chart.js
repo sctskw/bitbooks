@@ -2,7 +2,7 @@ import 'amcharts3'
 import 'amcharts3/amcharts/serial'
 import 'amcharts3/amcharts/plugins/dataloader'
 
-function createSeries (opts) {
+function createDepth (opts) {
   function formatNumber (val, chart, precision) {
     return window.AmCharts.formatNumber(val, {
       precision: precision || chart.precision,
@@ -17,19 +17,20 @@ function createSeries (opts) {
     let data = item.dataContext
     let exchanges = data.exchanges
 
-    let value = data.value
+    let value = parseFloat(data.value)
     let total = data[`${type}.volume.total`]
-    let volume = data[`${type}.volume`]
+    let volume = parseFloat(data[`${type}.volume`])
+    let label = type.slice(0, -1).toUpperCase()
 
     let html = [
-      'Bid: <strong>',
-      formatNumber(value, chart, 4),
+      `${label} Price: <strong>`,
+      formatNumber(value, chart, 8),
       '</strong><br />',
       'Total Volume: <strong>',
-      formatNumber(total, chart, 4),
+      formatNumber(total, chart, 8),
       '</strong><br />',
       'Volume: <strong>',
-      formatNumber(volume, chart, 4),
+      formatNumber(volume, chart, 8),
       '</strong><br />',
       '---------------------'
     ]
@@ -40,7 +41,7 @@ function createSeries (opts) {
       let sub = [
         '<br/>',
         `${title} Volume: <strong>`,
-        formatNumber(value, chart, 4),
+        formatNumber(value, chart, 8),
         '</strong>'
       ]
 
@@ -98,7 +99,8 @@ function createNegativeBar (opts) {
     let exchange = pointer.split('.')[2].split('::')[0]
     let type = (value <= 0 ? 'asks' : 'bids')
 
-    return `[${exchange} ${type}] ${Math.abs(value)} @ ${price}`
+    return `[${exchange}] <strong>${Math.abs(value)}</strong>
+      ${type} @ <strong>${price}</strong>`
   }
 
   return createChart(Object.assign(opts, {
@@ -170,7 +172,7 @@ function createNegativeBar (opts) {
       gridPosition: 'start',
       axisAlpha: 0,
       tickLength: 0,
-      title: 'Price'
+      title: 'Price (BTC/ETH)'
     }
   }))
 }
@@ -213,6 +215,6 @@ function createChart (opts) {
 
 export default {
   createChart,
-  createSeries,
+  createDepth,
   createNegativeBar
 }

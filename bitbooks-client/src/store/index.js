@@ -78,7 +78,7 @@ export default new Vuex.Store({
     },
 
     update: function (context, data) {
-      let refresh = (Date.now() - parseInt(this.state.updated)) > 3000
+      let refresh = (Date.now() - parseInt(this.state.updated)) > 10000
 
       // check last time we updated so we don't spam
       if (!refresh) return false

@@ -236,15 +236,13 @@ export default {
     },
 
     getNegBarData: function (exchanges) {
-      let x = this.getLineData(exchanges).reverse()
-      console.log(JSON.stringify(x))
-      return x
+      return this.getLineData(exchanges).reverse()
     }
   },
 
   created: function () {
-    let Series = Chart.createSeries({
-      id: 'series-chart',
+    let Series = Chart.createDepth({
+      id: 'depth-chart',
       title: 'Price (BTC/ETH)'
     })
 
