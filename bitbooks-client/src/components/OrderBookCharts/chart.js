@@ -1,6 +1,5 @@
 import 'amcharts3'
 import 'amcharts3/amcharts/serial'
-import 'amcharts3/amcharts/plugins/dataloader'
 
 function createDepth (opts) {
   function formatNumber (val, chart, precision) {
