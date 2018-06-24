@@ -3,6 +3,53 @@ import 'amcharts3/amcharts/serial'
 import 'amcharts3/amcharts/plugins/dataloader'
 
 function createSeries (opts) {
+  function formatNumber (val, chart, precision) {
+    return window.AmCharts.formatNumber(val, {
+      precision: precision || chart.precision,
+      decimalSeparator: chart.decimalSeparator,
+      thousandsSeparator: chart.thousandsSeparator
+    })
+  }
+
+  function balloon (item, graph) {
+    let type = graph.id
+    let chart = graph.chart
+    let data = item.dataContext
+    let exchanges = data.exchanges
+
+    let value = data.value
+    let total = data[`${type}.volume.total`]
+    let volume = data[`${type}.volume`]
+
+    let html = [
+      'Bid: <strong>',
+      formatNumber(value, chart, 4),
+      '</strong><br />',
+      'Total Volume: <strong>',
+      formatNumber(total, chart, 4),
+      '</strong><br />',
+      'Volume: <strong>',
+      formatNumber(volume, chart, 4),
+      '</strong><br />',
+      '---------------------'
+    ]
+
+    for (let ex in exchanges) {
+      let title = ex.split('::')[0].toUpperCase()
+      let value = exchanges[ex]
+      let sub = [
+        '<br/>',
+        `${title} Volume: <strong>`,
+        formatNumber(value, chart, 4),
+        '</strong>'
+      ]
+
+      html = html.concat(sub)
+    }
+
+    return html.join('')
+  }
+
   return createChart(Object.assign(opts, {
     type: 'serial',
     graphs: [{
@@ -43,6 +90,91 @@ function createSeries (opts) {
   }))
 }
 
+function createNegativeBar (opts) {
+  function tooltip (data, graph, positive) {
+    let price = data.category
+    let value = data.values.value
+    let pointer = graph.valueField
+    let exchange = pointer.split('.')[2].split('::')[0]
+    let type = (value <= 0 ? 'asks' : 'bids')
+
+    return `[${exchange} ${type}] ${Math.abs(value)} @ ${price}`
+  }
+
+  return createChart(Object.assign(opts, {
+    rotate: true,
+    type: 'serial',
+    theme: 'light',
+    addClassNames: true,
+    autoMargins: true,
+    marginLeft: 50,
+    marginBottom: 100,
+    valueAxes: [{
+      id: 'v1',
+      title: 'Volume',
+      stackType: 'regular',
+      axisAlpha: 0.2,
+      gridAlpha: 0,
+      position: 'left',
+      ignoreAxisWidth: false
+    }],
+    balloon: {
+      fixedPosition: true
+    },
+    startDuration: 1,
+    graphs: [{
+      alphaField: 'alpha',
+      balloonFunction: tooltip,
+      clustered: false,
+      dashLengthField: 'dashLengthColumn',
+      fillAlphas: 0.5,
+      lineAlpha: 0.5,
+      lineColor: '#0082d7',
+      type: 'column',
+      valueField: 'asks.exchange.bittrex::BTC_ETH'
+    }, {
+      alphaField: 'alpha',
+      balloonFunction: tooltip,
+      clustered: false,
+      dashLengthField: 'dashLengthColumn',
+      fillAlphas: 1,
+      lineAlpha: 1,
+      lineColor: '#0082d7',
+      type: 'column',
+      valueField: 'bids.exchange.bittrex::BTC_ETH'
+    }, {
+      alphaField: 'alpha',
+      balloonFunction: tooltip,
+      clustered: false,
+      dashLengthField: 'dashLengthColumn',
+      fillAlphas: 0.5,
+      lineAlpha: 0.5,
+      lineColor: '#2da0a3',
+      stackable: true,
+      type: 'column',
+      valueField: 'asks.exchange.poloniex::BTC_ETH'
+    }, {
+      alphaField: 'alpha',
+      balloonFunction: tooltip,
+      clustered: false,
+      dashLengthField: 'dashLengthColumn',
+      fillAlphas: 1,
+      lineAlpha: 0,
+      lineColor: '#2da0a3',
+      stackable: true,
+      type: 'column',
+      valueField: 'bids.exchange.poloniex::BTC_ETH'
+    }],
+    categoryField: 'price',
+    categoryAxis: {
+      gridPosition: 'start',
+      axisAlpha: 0,
+      tickLength: 0,
+      title: 'Price'
+    }
+  }))
+}
+
 function createChart (opts) {
   let id = opts && opts.id
   let title = opts && opts.title
@@ -60,6 +192,7 @@ function createChart (opts) {
     },
     theme: 'light',
     categoryField: 'value',
+    autoMargins: true,
     valueAxes: [{
       title: 'Volume'
     }],
@@ -78,54 +211,8 @@ function createChart (opts) {
   }, opts))
 }
 
-function balloon (item, graph) {
-  let type = graph.id
-  let chart = graph.chart
-  let data = item.dataContext
-  let exchanges = data.exchanges
-
-  let value = data.value
-  let total = data[`${type}.volume.total`]
-  let volume = data[`${type}.volume`]
-
-  let html = [
-    'Bid: <strong>',
-    formatNumber(value, chart, 4),
-    '</strong><br />',
-    'Total Volume: <strong>',
-    formatNumber(total, chart, 4),
-    '</strong><br />',
-    'Volume: <strong>',
-    formatNumber(volume, chart, 4),
-    '</strong><br />',
-    '---------------------'
-  ]
-
-  for (let ex in exchanges) {
-    let title = ex.split('::')[0].toUpperCase()
-    let value = exchanges[ex]
-    let sub = [
-      '<br/>',
-      `${title} Volume: <strong>`,
-      formatNumber(value, chart, 4),
-      '</strong>'
-    ]
-
-    html = html.concat(sub)
-  }
-
-  return html.join('')
-}
-
-function formatNumber (val, chart, precision) {
-  return window.AmCharts.formatNumber(val, {
-    precision: precision || chart.precision,
-    decimalSeparator: chart.decimalSeparator,
-    thousandsSeparator: chart.thousandsSeparator
-  })
-}
-
 export default {
   createChart,
-  createSeries
+  createSeries,
+  createNegativeBar
 }

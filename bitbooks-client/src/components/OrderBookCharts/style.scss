@@ -3,9 +3,11 @@
   .ob-chart {
     height: 300px;
     margin: 0 auto;
-    overflow: hidden;
-    text-align: left;
-    width: 1280px;
+    width: 1000px;
+
+    &.neg-bar {
+      height: 600px;
+    }
   }
 
 }

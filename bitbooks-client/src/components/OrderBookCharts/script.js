@@ -24,7 +24,7 @@ export default {
 
     ...mapGetters('OrderBook', ['getOrders']),
 
-    getChartData: function (exchanges) {
+    getData: function (exchanges) {
       let results = {
         bids: {},
         asks: {}
@@ -124,6 +124,23 @@ export default {
         })
       }
 
+      // index the order volumes by price for all exchanges
+      for (let ex in exchanges) {
+        let data = exchanges[ex]
+        merge(results.bids, group(ex, data.bids))
+        merge(results.asks, group(ex, data.asks))
+      }
+
+      // calculate the current orders
+      let bids = quantify(trim(results.bids))
+      let asks = quantify(trim(results.asks))
+
+      return { bids, asks }
+    },
+
+    getSeriesData: function (exchanges) {
+      let data = this.getData(exchanges)
+
       function normalize (type, data) {
         return data
           .reduce(function (memo, item) {
@@ -149,36 +166,96 @@ export default {
           })
       }
 
-      // index the order volumes by price for all exchanges
-      for (let ex in exchanges) {
-        let data = exchanges[ex]
-        merge(results.bids, group(ex, data.bids))
-        merge(results.asks, group(ex, data.asks))
-      }
-
-      // calculate the current orders
-      let bids = quantify(trim(results.bids))
-      let asks = quantify(trim(results.asks))
-
-      if (!bids.length || !asks.length) return []
-
       // sanitize the data for the chart
-      bids = normalize('bids', bids).items.reverse()
-      asks = normalize('asks', asks).items
+      let bids = normalize('bids', data.bids).items.reverse()
+      let asks = normalize('asks', data.asks).items
 
       return [].concat(bids, asks)
-    }
+    },
 
+    getLineData: function (exchanges) {
+      let data = this.getData(exchanges)
+
+      function normalize (type, data) {
+        return data.reduce(function (memo, item) {
+          memo[item.value] = {
+            type: type,
+            price: item.value,
+            volume: item.volume
+          }
+
+          let xs = item.exchanges
+
+          // copy exchanges over
+          for (let ex in xs) {
+            let val = xs[ex] * (/bids/ig.test(type) ? 1 : -1)
+
+            memo[item.value][`exchange.${ex}`] = val
+          }
+
+          return memo
+        }, {})
+      }
+
+      function merge (dest, data) {
+        for (let price in data) {
+          if (!dest[price]) dest[price] = []
+          dest[price].push(data[price])
+        }
+        return dest
+      }
+
+      let bids = normalize('bids', data.bids)
+      let asks = normalize('asks', data.asks)
+
+      let results = {}
+      results = merge(results, bids)
+      results = merge(results, asks)
+
+      return Object.keys(results).sort()
+        .reduce((memo, price) => {
+          let items = results[price]
+
+          let value = { price }
+
+          items.forEach((item) => {
+            let keys = Object.keys(item)
+            let type = item.type
+
+            keys.forEach((key) => {
+              if (/exchange/ig.test(key)) {
+                value[`${type}.${key}`] = item[key]
+              }
+            })
+          })
+
+          memo.push(value)
+
+          return memo
+        }, [])
+    },
+
+    getNegBarData: function (exchanges) {
+      let x = this.getLineData(exchanges).reverse()
+      console.log(JSON.stringify(x))
+      return x
+    }
   },
 
   created: function () {
-    let chart = Chart.createSeries({
-      id: 'ob-chart',
+    let Series = Chart.createSeries({
+      id: 'series-chart',
+      title: 'Price (BTC/ETH)'
+    })
+
+    let NegBar = Chart.createNegativeBar({
+      id: 'neg-bar-chart',
       title: 'Price (BTC/ETH)'
     })
 
     this.$store.watch(this.getOrders, (data) => {
-      chart.load(this.getChartData(data))
+      Series.load(this.getSeriesData(data))
+      NegBar.load(this.getNegBarData(data))
     })
   }
 
