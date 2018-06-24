@@ -1,0 +1,18 @@
+<div class="page-status">
+
+  <div v-if="connected">
+    <label>Status:</label>
+    <span class="online title">ONLINE</span>
+  </div>
+
+  <div v-if="!connected">
+    <label>Status:</label>
+    <span class="offline title"> OFFLINE </span>
+  </div>
+
+  <div v-if="connected">
+    <label>Last Updated:</label>
+    <span><strong>{{ new Date(updated).toLocaleString() }}</strong></span>
+  </div>
+
+</div>
