@@ -1,21 +1,47 @@
-# bitbooks
+bitbooks
+========
 
-# requirements
+A combined order book view for multiple crypto exchanges
 
-Build a combined order book that takes the full order books from Bittrex and Poloniex for the
-BTC_ETH market and displays them in a way that shows combined volume at each price point.
+### Dependencies
 
-Other considerations:
+- Node >= 8.11
+- Redis >= 4
+- VueJS >= 2.5
 
-Please complete the challenge in Nodejs
-Clearly label which is ask book and which is the bids book
-Clearly label which exchange has order volume at each price point
-Please host a demo of the code running online (free heroku site or similar)
+### Start the API
 
-Extra points for:
+```
+cd bitbooks-api
+npm start
+```
 
-More exchanges
-Allow user to switch to different markets (the BTC_DOGE market for example)
-Highlight if the books overlap (ie bids on Bittrex overlap with asks on Poloniex)
-Actively updating the combined order book based on actual trades from the exchanges
-Unit Tests
+### Start the Client
+
+```
+cd bitbooks-client
+npm run serve
+```
+
+### Start the Feeds
+
+NOTE: Requires Redis Server to be online either on LocalHost:6379 or by setting it
+with `process.env.REDIS_URL`
+
+```
+cd bitbooks-api
+npm run feeds
+```
+
+### Run the Test Suite
+
+```
+npm test
+```
+
+### Future Improvements
+
+- Use persistent Database instead of in-memory Cache
+- Leverage Lamda or Serverless Architecture for Feeds
+- Client Side Unit Tests
+

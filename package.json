@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "./bin/www",
-    "test": "echo Testing...",
+    "test": "cd bitbooks-api && npm test",
     "preinstall": "scripts/preinstall.sh",
     "install": "scripts/install.sh",
     "postinstall": "scripts/postinstall.sh"
