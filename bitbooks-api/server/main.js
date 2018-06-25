@@ -20,7 +20,6 @@ API.mount(server, '/api')
 
 // mount the web app base directory
 server.get('*', restify.plugins.serveStatic({
-  // TODO: how to deal with relative pathing? aliases? globals?
   directory: path.resolve(CONFIG.APP_BASE, 'bitbooks-client/dist'),
   default: 'index.html'
 }))
