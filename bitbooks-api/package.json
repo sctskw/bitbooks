@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./server",
+    "server:debug": "node --inspect-brk ./server",
     "test": "./node_modules/.bin/jest --config jest.config.json",
     "test:watch": "./node_modules/.bin/jest --watchAll --config jest.config.json",
     "test:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand --config jest.config.json",

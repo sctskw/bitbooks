@@ -1,29 +1,19 @@
 const Router = require('restify-router').Router
 
-const Clients = require(global.__appbase + '/lib/clients')
-
+const API = require('./api.js')
 const Exchanges = new Router()
 
 // return all the enabled Exchanges
+// NOTE: async/await doesn't work without a wrapper fn
+// which ends up being less terse so we avoid it for now
 Exchanges.get('/', function (req, res, next) {
-  let exchanges = Object.keys(Clients.EXCHANGES)
-
-  let result = exchanges.reduce((memo, ex) => {
-    let exchange = Clients.EXCHANGES[ex]
-
-    if (!exchange || !exchange.enabled) return memo
-
-    memo.push({
-      enabled: exchange.enabled,
-      name: exchange.name
-    })
-
-    return memo
-  }, [])
-
-  res.send(result)
-
-  return next()
+  API.getAllExchanges(
+    {}, // TODO: ability to filter
+    function (err, data) {
+      if (err) return next(err)
+      return res.send(data) && next()
+    }
+  )
 })
 
 module.exports = Exchanges
