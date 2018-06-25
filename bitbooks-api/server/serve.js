@@ -6,6 +6,7 @@ const SOCKET = require('./socket.js')
 const STORAGE = require('../lib/cache')
 const FEEDS = require('../bin/feeds.js')
 
+// open the HTTP connection
 function serve (port, server) {
   // start the server
   SERVER.listen(port, server, function () {
@@ -15,6 +16,8 @@ function serve (port, server) {
   return SERVER
 }
 
+// open the SOCKET connection
+// @param server {object} - the instance of the HTTP server
 async function startSocket (server) {
   try {
     let socket = await SOCKET.serve({
@@ -36,6 +39,9 @@ async function startSocket (server) {
   }
 }
 
+// initialize the client feeds
+// NOTE: we shouldn't do this on the same thread/server but its
+// easier for Heroku deployments for now
 function startFeeds () {
   log('[feeder] starting feeds')
 
