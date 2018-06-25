@@ -1,10 +1,12 @@
 const Redis = require('redis')
 
+/**
+ * Subscribe to the published events coming from Redis
+ */
 module.exports.subscribe = function (opts, callback) {
   const Storage = Redis.createClient(process.env.REDIS_URL)
 
   Storage.on('message', function (channel, message) {
-
     let [exchange, market] = channel.split('::')
 
     let msg = {
