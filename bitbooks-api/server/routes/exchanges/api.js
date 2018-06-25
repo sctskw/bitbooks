@@ -6,8 +6,6 @@ function getAllExchanges (opts, callback) {
   try {
     let exchanges = Object.keys(Clients.EXCHANGES)
 
-    throw new Error('test')
-
     let result = exchanges.reduce((memo, ex) => {
       let exchange = Clients.EXCHANGES[ex]
 
