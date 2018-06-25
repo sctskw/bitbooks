@@ -1,6 +1,6 @@
 export default {
 
-  name: 'OrderBook',
+  name: 'Exchanges',
 
   namespaced: true,
 
