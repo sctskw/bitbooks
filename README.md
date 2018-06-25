@@ -39,7 +39,7 @@ npm run feeds
 npm test
 ```
 
-### Architecure
+### Architecture
 ![alt text](https://github.com/sctskw/bitbooks/blob/develop/architecture.png)
 
 ### Future Improvements
