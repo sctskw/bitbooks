@@ -13,7 +13,7 @@
         <v-list-tile>
           <v-list-tile-content>Get the Code:</v-list-tile-content>
           <v-list-tile-content class="align-end">
-            <a href="https://github.com/sctskw">https://github.com/sctskw</a>
+            <a href="https://github.com/sctskw/bitbooks">https://github.com/sctskw/bitbooks</a>
           </v-list-tile-content>
         </v-list-tile>
       </v-card>
