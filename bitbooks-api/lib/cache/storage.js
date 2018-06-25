@@ -1,13 +1,26 @@
 const EventEmitter = require('events').EventEmitter
 const Redis = require('redis')
 
-// NOTE: would prefer to use Redis for caching, but it's difficult to guarantee immediate
-// consistency since you don't know when set() actually finishes. This causes data discrepancies
+// NOTE: would prefer to use Redis for caching, but it's
+// difficult to guarantee immediate consistency since you don't know
+// when set() actually finishes. This causes data discrepancies
 // so for now we just use an in-memory cache until a real DB is needed
 const cache = require('memory-cache')
 
 // Redis.debug_mode = true
 
+/**
+ * Simple storage class to house our Order Book data. It allows
+ * for basic patching and emits events when updates are made.
+ *
+ * Structure:
+ *
+ *  <exchange>::<market> : { <price> : <volume> }
+ *
+ *  eg..
+ *
+ * 'poloniex::BTC_ETH' : { 0.0071212 : 1.2 }
+ */
 class Storage extends EventEmitter {
   constructor () {
     super()
@@ -28,6 +41,7 @@ class Storage extends EventEmitter {
     }
   }
 
+  // initialize the dataset by key in storage
   init (envelope) {
     let env = _unwrap(envelope)
 
@@ -37,6 +51,7 @@ class Storage extends EventEmitter {
     this.publish(env, this.get(env.k))
   }
 
+  // patch the dataset by key in storage
   patch (envelope, callback = function () {}) {
     try {
       let env = _unwrap(envelope)
@@ -66,6 +81,13 @@ class Storage extends EventEmitter {
   }
 }
 
+// handles updating the current dataset for a storage key by patching in
+// necessary updates/changes to the dataset that comes from the clients
+// as individual updates
+//
+// @param type: string - bids, asks
+// @param cache: object - the cache in its current state
+// @param data: object - the new data to be patched/updated
 function _patch (type, cache, data) {
   try {
     let amount = parseFloat(data.amount)
@@ -73,17 +95,21 @@ function _patch (type, cache, data) {
     let copy = JSON.parse(JSON.stringify(cache || {})) // clone
 
     // update the bids at this rate
+    // positive value means it's the newest value in the order book
+    // NOTE: we don't add these, we just replace since it's not an augment
+    // but comes in as the adjusted value at a given price
     if (amount > 0) {
       copy[type][rate] = amount
-      console.log(`patched [${type}] ${rate} => ${amount}`)
+      // console.log(`patched [${type}] ${rate} => ${amount}`)
     }
 
     // clear the bids at this rate since the volume is 0 or less
+    // NOTE: super aggressive clearing just in case
     if (amount <= 0) {
       copy[type][rate] = 0
       copy[type][rate] = null
       delete copy[type][rate]
-      console.log(`patched [${type}] ${rate} => ${amount}`)
+      // console.log(`patched [${type}] ${rate} => ${amount}`)
     }
 
     return copy
@@ -92,6 +118,7 @@ function _patch (type, cache, data) {
   }
 }
 
+// parse an envelope into something more useful to use later
 function _unwrap (envelope) {
   let exchange = envelope.exchange
   let data = envelope.data
