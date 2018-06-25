@@ -46,5 +46,8 @@ npm test
 
 - Use persistent Database instead of in-memory Cache
 - Leverage Lamda or Serverless Architecture for Feeds
+- Utilize Exchange API for Dynamic Exchange selection/subscription
+- Separate Repos for Exchange Clients, WebAPI, WebClient and Feeds
 - Client Side Unit Tests
+
 
