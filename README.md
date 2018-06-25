@@ -39,6 +39,9 @@ npm run feeds
 npm test
 ```
 
+### Architecure
+![alt text](https://github.com/sctskw/bitbooks/blob/develop/architecture.png)
+
 ### Future Improvements
 
 - Use persistent Database instead of in-memory Cache
