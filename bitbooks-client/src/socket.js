@@ -57,7 +57,7 @@ const Facade = new Vue({
     },
 
     send: function (message) {
-      this.socket.send(message)
+      this.socket.send(JSON.stringify(message))
     },
 
     emit: function (message) {

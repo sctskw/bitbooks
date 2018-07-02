@@ -16,6 +16,7 @@ export default new Vuex.Store({
 
   state: {
     connected: false,
+    subscribed: false,
     updated: 0,
     interval: 15000,
     data: null
@@ -41,6 +42,11 @@ export default new Vuex.Store({
 
     disconnect: function (state) {
       state.connected = false
+      state.subscribed = false
+    },
+
+    subscribe: function (state) {
+      state.subscribed = true
     },
 
     update: function (state, data) {
@@ -56,6 +62,10 @@ export default new Vuex.Store({
   actions: {
 
     monitor: function (context) {
+      Socket.$on('connected', () => {
+        this.dispatch('subscribe')
+      })
+
       Socket.$on('closed', () => {
         this.dispatch('disconnect')
       })
@@ -65,6 +75,22 @@ export default new Vuex.Store({
       })
 
       this.dispatch('connect')
+    },
+
+    subscribe: function (context) {
+      debugger
+      Socket.send({
+        type: 'subscribe',
+        data: {
+          markets: [
+            // TODO: get these from config/storage
+            'poloniex::BTC_ETH',
+            'bittrex::BTC_ETH'
+          ]
+        }
+      })
+
+      context.commit('subscribe')
     },
 
     connect: function (context) {
