@@ -33,16 +33,16 @@ describe('non-production tests', () => {
   })
 
   test('server/serve starts the server', (done) => {
-    expect.hasAssertions()
-
     const SERVER = require('server/main.js')
     const SOCKET = require('server/socket.js')
-    const STORAGE = require('lib/cache')
     const FEEDS = require('bin/feeds.js')
 
+    let emitter = jest.fn()
+
     SERVER.listen.mockImplementation(jest.fn())
-    SOCKET.serve.mockImplementation(jest.fn().mockResolvedValue({}))
-    STORAGE.subscribe.mockImplementation(jest.fn())
+    SOCKET.serve.mockImplementation(jest.fn().mockResolvedValue({
+      on: emitter
+    }))
     FEEDS.start.mockImplementation(jest.fn())
 
     // init the server
@@ -53,7 +53,6 @@ describe('non-production tests', () => {
     // suite runs
     setTimeout(() => {
       expect(SERVER.listen).toBeCalled()
-      expect(STORAGE.subscribe).toBeCalled()
       expect(FEEDS.start).not.toBeCalled()
       done()
     }, 50)
@@ -73,12 +72,14 @@ describe('production tests', () => {
   test('server/serve starts the server and feeds', (done) => {
     const SERVER = require('server/main.js')
     const SOCKET = require('server/socket.js')
-    const STORAGE = require('lib/cache')
     const FEEDS = require('bin/feeds.js')
 
+    let emitter = jest.fn()
+
     SERVER.listen.mockImplementation(jest.fn())
-    SOCKET.serve.mockImplementation(jest.fn().mockResolvedValue({}))
-    STORAGE.subscribe.mockImplementation(jest.fn())
+    SOCKET.serve.mockImplementation(jest.fn().mockResolvedValue({
+      on: emitter
+    }))
     FEEDS.start.mockImplementation(jest.fn())
 
     // init the server
@@ -89,9 +90,10 @@ describe('production tests', () => {
     // suite runs
     setTimeout(() => {
       expect(SERVER.listen).toBeCalled()
-      expect(STORAGE.subscribe).toBeCalled()
       expect(FEEDS.start).toBeCalled()
+      expect(emitter).toBeCalled()
       done()
     }, 50)
   })
 })
+

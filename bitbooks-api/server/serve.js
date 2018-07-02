@@ -3,7 +3,7 @@ const log = require('../lib/logging.js')('server')
 
 const SERVER = require('./main.js')
 const SOCKET = require('./socket.js')
-const STORAGE = require('../lib/cache')
+const HANDLERS = require('./handlers.js')
 const FEEDS = require('../bin/feeds.js')
 
 // open the HTTP connection
@@ -29,10 +29,7 @@ async function startSocket (server) {
 
     log(`${server.name} socket is alive`)
 
-    // broadcast subscription messages
-    STORAGE.subscribe({}, function (message) {
-      socket.broadcast(JSON.stringify(message))
-    })
+    socket.on('message', HANDLERS.parse)
   } catch (err) {
     log(`socket server not started: ${err}`)
     process.exit(0)

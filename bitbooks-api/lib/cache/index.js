@@ -5,6 +5,8 @@ const Redis = require('redis')
  */
 module.exports.subscribe = function (opts, callback) {
   const Storage = Redis.createClient(process.env.REDIS_URL)
+  const subscriptions = (opts && opts.subscriptions) || []
+
 
   Storage.on('message', function (channel, message) {
     let [exchange, market] = channel.split('::')
@@ -19,7 +21,9 @@ module.exports.subscribe = function (opts, callback) {
     return callback(msg)
   })
 
-  // TODO: subscribe to all things
-  Storage.subscribe('poloniex::BTC_ETH')
-  Storage.subscribe('bittrex::BTC_ETH')
+  // suscribe to published events
+  subscriptions.forEach((sub) => {
+    Storage.subscribe(sub)
+  })
+
 }

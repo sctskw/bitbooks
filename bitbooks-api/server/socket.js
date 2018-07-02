@@ -30,16 +30,24 @@ function initSocketServer (config, callback) {
     // incoming connection established event
     server.on('connection', function (socket, req) {
       let address = req.connection.remoteAddress
+
       console.log(`incoming connection established: ${address}`)
+
       socket.send('connection established. welcome!')
+
+      // save this for use later since we can't get access to it for some
+      // reason
+      socket.server = server
+
+      // expose messages for each socket connection
+      socket.on('message', (msg) => {
+        server.emit('message', socket, msg)
+      })
+
     })
 
-    // incoming message event
-    server.on('message', function (message) {
-      console.log(`incoming message: ${message}`)
-    })
+    return callback(null, server)
 
-    if (callback) return callback(null, server)
   } catch (err) {
     console.error(err)
     if (typeof callback === 'function') return callback(err)
